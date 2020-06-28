@@ -8,11 +8,20 @@ Just a GitHub cheat-sheet because I'm forgetful (or sometimes very tired) when I
 [Using syntax highlighting in markdown syntax](https://github.com/github/linguist/blob/master/lib/linguist/languages.yml)  
 
 
-- If you need to create a local copy of a project from Github, all you need to do is open bash in the desired target folder, then type:
+If you need to create a local copy of a project from Github, all you need to do is open bash in the desired target folder, then type:
 
   ```gitattributes
   git clone the_url_of_the_repository
   ```
+If you were working on a branch from a different machine and need to make sure you're up-to-date with the version in the repository:
+
+```gitattributes
+git checkout nameOfTheBranch
+```
+Or if you already know you're on the correct branch:
+```gitattributes
+git checkout
+```
 
 - If you already have a project downloaded and want to make a new branch, first make sure your local version matches the master branch. If you're not already on the main branch, it'll switch to the main when you do this.
 
