@@ -60,8 +60,8 @@ git checkout
   ```gitattributes
   git push -u origin new-feature
   ```
-NPM Cheat-Sheet
-=====
+
+#NPM Cheat-Sheet
 
 - To initiate a new project with npm:
 
@@ -72,4 +72,13 @@ npm init
 - To install a package and save it as a dependency in the package.json file:
 ```npm
 npm install <pkg> --save
+```
+
+#[Update Node.js via npm (and npm along with it)](https://davidwalsh.name/upgrade-nodejs)
+
+- `n` is a package that serves as a helper in npm to update npm and Node.js (and do other things, possibly)
+- ```
+sudo npm cache clean -f
+sudo npm install -g n
+sudo n stable
 ```
