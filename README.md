@@ -65,14 +65,16 @@ git checkout
 
 - To initiate a new project with npm:
 
-```npm
-npm init
-```
+	```gitattributes
+	npm
+	npm init
+	```
 
 - To install a package and save it as a dependency in the package.json file:
-```npm
-npm install <pkg> --save
-```
+  ```gitattributes
+  npm
+  npm install <pkg> --save
+  ```
 
 ## [Update Node.js via npm (and npm along with it)](https://davidwalsh.name/upgrade-nodejs)
 
