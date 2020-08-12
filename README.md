@@ -81,6 +81,7 @@ git checkout
 - `n` is a package that serves as a helper in npm to update npm and Node.js (and do other things, possibly)
 - 
 	```gitattributes
+	sudo apt-get update
 	sudo npm cache clean -f
 	sudo npm install -g n
 	sudo n stable
