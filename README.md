@@ -65,14 +65,12 @@ git checkout
 
 - To initiate a new project with npm:
 
-	```gitattributes
-	npm
+	```npm
 	npm init
 	```
 
 - To install a package and save it as a dependency in the package.json file:
-  ```gitattributes
-  npm
+  ```npm
   npm install <pkg> --save
   ```
 
