@@ -93,3 +93,5 @@ git checkout
 	sudo npm install -g n
 	sudo n stable
     ```
+    
+- Make sure to restart your terminal afterwards!
