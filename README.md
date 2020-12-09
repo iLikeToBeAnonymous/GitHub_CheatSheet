@@ -63,6 +63,15 @@ git checkout
 
 # NPM Cheat-Sheet
 
+- If you don't have nodejs installed yet, do it now with:
+
+  ```
+  sudo apt install nodejs
+  ```
+
+  - You can verify that it installed by typing `node --version`.
+  - Next, make sure npm is installed by typing `sudo apt install npm`. This will take a bit to install. Afterwards, verify that it installed by typing `npm --version`.
+
 - To initiate a new project with npm:
 
 	```npm
