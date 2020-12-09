@@ -95,3 +95,5 @@ git checkout
     ```
     
 - Make sure to restart your terminal afterwards!
+
+If you've downloaded a package from GitHub and need to install it with npm, run `npm install` first, followed by `npm audit fix` to automatically fix any vulnerabilities. Afterwards, run `npm install` a second time to verify that there are no remaining vulnerabilities.
