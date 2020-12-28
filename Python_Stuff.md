@@ -2,3 +2,5 @@
 
 1) Make sure that g++/gcc compiler is installed on your system. If you're in WSL (Windows Subsystem for Linux), you'll probably need to run `sudo apt-get install g++` for this to work. 
 2) The _slightly_ bloated solution is to instead run `sudo apt-get install build-essential`, which will install EVERYTHING, including the `make` command...
+
+For further reading, try the link [here](https://linuxconfig.org/command-make-not-found-on-ubuntu-20-04-focal-fossa).
