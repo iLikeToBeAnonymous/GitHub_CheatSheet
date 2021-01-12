@@ -10,6 +10,11 @@ ___
 ``` powershell
   powershell -executionpolicy bypass -File .\yourScriptNameHere.ps1
 ```
+- Alternatively, this seems to work as well:
+
+``` powershell
+  Get-Content .\yourScriptNameHere.ps1 | Invoke-Expression
+```  
 
 #### Run script silently and/or run with elevation
 According to this [post by user SilverAzide](https://forum.rainmeter.net/viewtopic.php?t=27632):
