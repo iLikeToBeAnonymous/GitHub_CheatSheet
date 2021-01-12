@@ -16,6 +16,14 @@ ___
   Get-Content .\yourScriptNameHere.ps1 | Invoke-Expression
 ```  
 
+- Another option is to create a shortcut to the script which automatically runs the script with those options embedded. To accomplish this:
+  1. Right-click your .ps1 file and select "_Create Shortcut_"
+  2. Next, right-click the shortcut you just created and go into the "Target" field.
+  3. Once you cursor is blinking within the field, hit "_HOME_" on your keyboard and paste the following:
+`%windir%\system32\WindowsPowerShell\v1.0\powershell.exe -noexit -executionpolicy bypass -File `<br>
+    The `-noexit` keeps the terminal window from auto-closing after execution, and the `-executionpolicy bypass` will do what was explained above.
+  4. Click "_Apply_" followed by "_OK_"
+
 #### Run script silently and/or run with elevation
 According to this [post by user SilverAzide](https://forum.rainmeter.net/viewtopic.php?t=27632):
 >The trick is the **-NonInteractive** switch; e.g., `powershell -NonInteractive -Command "... your PS command..."`
