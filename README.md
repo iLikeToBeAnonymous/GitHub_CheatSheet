@@ -87,6 +87,11 @@ git checkout
   ```npm
   npm uninstall --save <package_name>
   ```
+  
+  Or to uninstall a dev dependency:
+  ```console
+  npm uninstall -D <package_name>
+  ```
 
 ## [Update Node.js via npm (and npm along with it)](https://davidwalsh.name/upgrade-nodejs)
 
