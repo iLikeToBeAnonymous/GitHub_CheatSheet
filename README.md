@@ -82,6 +82,11 @@ git checkout
   ```npm
   npm install <pkg> --save
   ```
+  
+- To [remove a package and its dependencies from a project](https://docs.npmjs.com/uninstalling-packages-and-dependencies) (and the package.json file):
+  ```npm
+  npm uninstall --save <package_name>
+  ```
 
 ## [Update Node.js via npm (and npm along with it)](https://davidwalsh.name/upgrade-nodejs)
 
