@@ -84,13 +84,18 @@ git checkout
   npm install <pkg> --save
   ```
   
+- To install a package as a _dev_ dependency (also saved in the package.json file):
+  ```node
+  npm install --save-dev <package_name>
+  ```
+  
 - To [remove a package and its dependencies from a project](https://docs.npmjs.com/uninstalling-packages-and-dependencies) (and the package.json file):
-  ```npm
+  ```node
   npm uninstall --save <package_name>
   ```
   
   Or to uninstall a dev dependency:
-  ```console
+  ```node
   npm uninstall -D <package_name>
   ```
 
