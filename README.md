@@ -31,7 +31,8 @@ git checkout
   git reset --hard origin/master
   ```
   - Alternatively:
-  - `git fetch` lets your local copy know the changes done in the remote repo of the branch you're on.
+  - `git fetch --all` lets your local copy know the changes done in the remote repo of the branch you're on.
+  - `git branch -r` shows all remote branches instead of just the branches on your local machine.
   - `git status` lets you know if you're up-to-date or ahead of the remote repo
   - You can then use `git pull` to update the local copy to match the remote repo
 
