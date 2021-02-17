@@ -1,8 +1,8 @@
-### Powershell basic stuff
+## Powershell Scripting Basics
 
 ___
 
-#### How to execute a powershell script 
+### How to execute a powershell script 
 (if you get the `... someScriptName.ps1 cannot be loaded because running scripts is disabled on this system` error).
 - Open an instance of Powershell in the script location. It doesn't SEEM to have to be opened as admin for this to work...
 - Then the cannon-to-kill-a-mosquito solution is to run your script by typing the following:
@@ -24,7 +24,7 @@ ___
     The `-noexit` keeps the terminal window from auto-closing after execution, and the `-executionpolicy bypass` will do what was explained above.
   4. Click "_Apply_" followed by "_OK_"
 
-#### Run script silently and/or run with elevation
+### Run script silently and/or run with elevation
 According to this [post by user SilverAzide](https://forum.rainmeter.net/viewtopic.php?t=27632):
 >The trick is the **-NonInteractive** switch; e.g., `powershell -NonInteractive -Command "... your PS command..."`
 
@@ -32,5 +32,21 @@ According to this [post by user SilverAzide](https://forum.rainmeter.net/viewtop
 
 >Here is a powershell command that will launch DOS-type batch file in an elevated hidden window (yes, you can launch a hidden powershell window that launches a hidden window). All you will see is a prompt for elevation.
 >
+```powershell
+powershell -NonInteractive -Command "Start-Process 'my_batch_file.cmd' [color=#FF0000]-Verb runAs[/color] -WindowStyle Hidden"
 ```
-powershell -NonInteractive -Command "Start-Process 'my_batch_file.cmd' [color=#FF0000]-Verb runAs[/color] -WindowStyle Hidden"```
+
+### Simple Step to add a domain user to the Administrators group:[<sup>1</sup>](#1)
+
+In PowerShell...
+
+```powershell
+Add-LocalGroupMember -Group Administrators -Member $env:USERDOMAIN\<username>
+```
+
+Note: Make sure you run PowerShell "As Administrator".
+
+___
+### References:
+<a id="1">[1]</a> 
+"Mohamed Jawad", [https://serverfault.com/questions/120229/adding-a-user-to-the-local-administrator-group-using-powershell](https://serverfault.com/questions/120229/adding-a-user-to-the-local-administrator-group-using-powershell), Accessed 2021-02-17
