@@ -36,6 +36,24 @@ According to this [post by user SilverAzide](https://forum.rainmeter.net/viewtop
 powershell -NonInteractive -Command "Start-Process 'my_batch_file.cmd' [color=#FF0000]-Verb runAs[/color] -WindowStyle Hidden"
 ```
 
+Alternatively, you can simply enable running scripts via PowerShell, which you probably want to do if you're using it as a development environment.
+```powershell
+Set-ExecutionPolicy RemoteSigned
+```
+
+This will enable any local scripts to run and only allow signed remote scripts to run. It's not ideal, but it's safer the changing the execution policy to `Unrestricted` instead. 
+
+If you need to disable running scripts again for security purposes, type:
+```powershell
+Set-ExecutionPolicy Restricted
+```
+
+The Set-ExecutionPolicy options are:
+- `Restricted` – No scripts can be run.
+- `AllSigned` – Only scripts signed by a trusted publisher can be run.
+- `RemoteSigned` – Downloaded scripts must be signed by a trusted publisher.
+- `Unrestricted` – All Windows PowerShell scripts can be run.
+
 ### Simple Step to add a domain user to the Administrators group:[<sup>1</sup>](#1)
 
 In PowerShell...
