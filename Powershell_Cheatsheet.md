@@ -7,7 +7,7 @@ The following command will send the top-level view of the current directory's li
 ls > myFileName.txt
 ```
 
-However, you can add a second arrow to **append*** to a file instead. If the file doesn't already exist, it will be created. 
+However, you can add a second arrow to **append** to a file instead. If the file doesn't already exist, it will be created. 
 
 ```powershell
 ls >> myFileName.txt
