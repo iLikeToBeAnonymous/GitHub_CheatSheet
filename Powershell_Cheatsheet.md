@@ -1,6 +1,27 @@
-## Powershell Scripting Basics
+
+## How to Save a List of a Folder's Contents to a .txt File
+
+The following command will send the top-level view of the current directory's list of files and folders to a .txt file. If the file already exists, its contents will be overwritten.
+
+```powershell
+ls > myFileName.txt
+```
+
+However, you can add a second arrow to **append*** to a file instead. If the file doesn't already exist, it will be created. 
+
+```powershell
+ls >> myFileName.txt
+```
+
+NOTE: the `>` and `>>` both send a specified stream to an output file you've defined. It is not limited to just use with the `ls` command. You can also do something like:
+
+```powershell
+"Hello World!" > myFileName.txt
+```
+Further reading can be found [here](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_redirection?view=powershell-7.1).
 
 ___
+## Powershell Scripting Basics
 
 ### How to execute a powershell script 
 (if you get the `... someScriptName.ps1 cannot be loaded because running scripts is disabled on this system` error).
