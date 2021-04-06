@@ -85,7 +85,15 @@ Add-LocalGroupMember -Group Administrators -Member $env:USERDOMAIN\<username>
 
 Note: Make sure you run PowerShell "As Administrator".
 
+### Write out list of currently running services[<sup>2</sup>](#2)
+
+```powershell
+Get-Service | Where-Object {$_.Status -eq "Running"} > myRunningServices.txt
+```
 ___
 ### References:
 <a id="1">[1]</a> 
-"Mohamed Jawad", [https://serverfault.com/questions/120229/adding-a-user-to-the-local-administrator-group-using-powershell](https://serverfault.com/questions/120229/adding-a-user-to-the-local-administrator-group-using-powershell), Accessed 2021-02-17
+Mohamed Jawad, [https://serverfault.com/questions/120229/adding-a-user-to-the-local-administrator-group-using-powershell](https://serverfault.com/questions/120229/adding-a-user-to-the-local-administrator-group-using-powershell), Accessed 2021-02-17
+
+<a id="2">[2]</a>
+Sergey Tkachenko, [https://winaero.com/save-list-services-file-windows-10/](https://winaero.com/save-list-services-file-windows-10/), Accessed 2021-04-06
