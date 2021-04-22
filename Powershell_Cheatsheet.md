@@ -21,6 +21,38 @@ NOTE: the `>` and `>>` both send a specified stream to an output file you've def
 Further reading can be found [here](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_redirection?view=powershell-7.1).
 
 ___
+## Symlinks (fancy shortcuts)
+Below only works in cmd, not powershell
+`mklink /J "C:\Link To Folder" "C:\Users\Name\Original Folder"`
+
+Powershell vs:
+
+_Disclaimer_: If you want to make a symlink to a network location, you probably won't be able to use it.
+Run the following to check what's enabled or not:
+```Powershell
+fsutil behavior query symlinkevaluation
+```
+
+You can pick which one you need to enable and then run the follow (Remote to remote is used below):
+```Powershell
+fsutil behavior set symlinkevaluation R2L:1
+```
+
+See article [here](http://www.virtualizetheworld.com/2014/07/the-symbolic-link-cannot-be-followed.html) for more details
+
+```Powershell
+$myAliasPath = "C:\Link To Folder"
+$myActualPath = "C:\Users\Name\Original Folder"
+New-Item -ItemType SymbolicLink -Path $myAliasPath -Target $myActualPath
+```
+
+If you need to update the target of the SymbolicLink later, just repeat the declaration of the variables, the 
+follow the `New-Item` line with `-Force`.
+
+```Powershell
+New-Item -ItemType SymbolicLink -Path $myAliasPath -Target $myActualPath -Force
+```
+___
 ## Powershell Scripting Basics
 
 ### How to execute a powershell script 
