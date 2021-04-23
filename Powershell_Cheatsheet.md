@@ -1,4 +1,16 @@
 
+## Filtering Results
+
+All available timezones available to the systme can be viewed via `tzutil /l`. However, this yields an exceedingly verbose response. If, for example, you only want to see results for "Alaska," you could...
+
+```Powershell
+> tzutil /l | Where-Object {$_ -match ".*laska.*"
+> echo "This yields following two lines:"
+> (UTC-9:00) Alaska
+> Alaskan Standard Time
+```
+
+___
 ## How to Save a List of a Folder's Contents to a .txt File
 
 The following command will send the top-level view of the current directory's list of files and folders to a .txt file. If the file already exists, its contents will be overwritten.
