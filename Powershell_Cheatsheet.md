@@ -10,6 +10,12 @@ All available timezones available to the systme can be viewed via `tzutil /l`. H
 > Alaskan Standard Time
 ```
 
+The `$_` above basically says that any property can match the regular expression. However, if you're searching for something which has property names, you can follow the underscore with a period and the property name, _then_ match to your regular expression. 
+
+```Powershell
+Get-TimeZone -ListAvailable | Where-Object {$_.BaseUtcOffset -match ".*-09:00.*"}
+```
+
 ___
 ## How to Save a List of a Folder's Contents to a .txt File
 
