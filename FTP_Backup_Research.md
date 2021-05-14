@@ -6,8 +6,8 @@ ___
 3) Establish (passive) connection with FTP server
 4) Upload zipped backup to the FTP server
 
-
-# Zipping the backup folder
+___
+## Zipping the backup folder
 PowerShell can be used to create and compress an archive by using the following commands:
 
 The simple way (to understand how the command works):
@@ -26,3 +26,6 @@ $destinationOfZip = "C:\Users\Somebody\$desiredZipName.zip"
 # Now to actually make the zip file...
 Compress-Archive -Path $folderToBackup -DestinationPath $destinationOfZip
 ```
+___
+## Establishing a connection with the FTP server
+The example I'm working with uses a server running [Pure-FTP](https://en.wikipedia.org/wiki/Pure-FTPd)
