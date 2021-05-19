@@ -61,6 +61,23 @@ git checkout
   ```gitattributes
   git push -u origin new-feature
   ```
+  
+### Renaming Files (the Right Way)
+If you rename a file via the file gui, Git doesn't seem to recognize it as a "rename" action, instead attributing it as a deletion of a file and the creation of a new one.
+
+For Git to record the action as a rename, you must rename the file via the terminal. In bash, type the following, being sure to include the file extensions if present:
+
+```gitattributes
+git mv old_filename.js new_filename.js
+```
+
+If you have complicated file names (or filenames with spaces, which you shouldn't have anyway), you can copy the file names from the file explorer and assign them to variables if you'd prefer (although you could also just copy them and paste them into the terminal)
+
+```gitattributes
+old_filename="current_filename_to_change.py"
+new_filename="better_filename.py"
+git mv $old_filename $new_filename
+```
 
 # NPM Cheat-Sheet
 
