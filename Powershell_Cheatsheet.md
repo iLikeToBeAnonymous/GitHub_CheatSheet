@@ -140,6 +140,13 @@ Note: Make sure you run PowerShell "As Administrator".
 ```powershell
 Get-Service | Where-Object {$_.Status -eq "Running"} > myRunningServices.txt
 ```
+
+### View all open/listening ports
+The following is copied from [gist:2558512](https://gist.github.com/steelcm/2558512) by member [Chris Steel (steelcm)](https://github.com/steelcm)
+
+```powershell
+PS C:\> netstat -an | select-string -pattern "listening"
+```
 ___
 ### References:
 <a id="1">[1]</a> 
