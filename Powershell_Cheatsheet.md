@@ -147,6 +147,35 @@ The following is copied from [gist:2558512](https://gist.github.com/steelcm/2558
 ```powershell
 PS C:\> netstat -an | select-string -pattern "listening"
 ```
+
+### Copying Folders and Files
+Personally, the two most-useful methods of copying are the [`copy-item`](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/copy-item?view=powershell-7.1) and [`robocopy`](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/robocopy) commands. The `copy-item` command is nice for copying a single file, but `robocopy` seems to still be the star when it comes to copying directories.
+
+#### Robocopy
+To copy a folder and ALL its contents:
+
+```PowerShell
+$copyFrom = "C:\myOriginal"
+$copyTo = "D:\myFolderClone"
+robocopy $copyFrom $copyTo /mt /zb /e /is
+```
+Some common robocopy flags (including those used above) are:
+- `/mt`     enables multithreading
+- `/z`      enables robocopy to resume if interrupted
+- `/b`      backup mode, overriding file and folder permission settings for files you might otherwise not have access to
+- `/zb`     copies files in restartable mode. If access is denied, switches to backup mode.
+- `/e`      copies subdirectories, including empty ones.
+- `/is`     ignores if an existing file in the target is identical to a file in the source. Normally, robocopy only overwrites files that are different.
+- `/purge`  deletes destination files and directories that no longer exist in the source.
+
+You can also choose to copy a single file, but the command is a bit confusing. In the command below, notice that the filename comes after both the "from" and "to" directories.
+
+```PowerShell
+$copyFrom = "C:\myOriginal"
+$copyTo = "D:\myFolderClone"
+$someFile = myFileName.txt
+robocopy $copyFrom $copyTo $someFile /mt /zb /e /is
+```
 ___
 ### References:
 <a id="1">[1]</a> 
