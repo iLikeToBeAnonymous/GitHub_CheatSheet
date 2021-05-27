@@ -26,6 +26,13 @@ That's it!
 
 Above network drive mapping was taken from [this post](https://superuser.com/questions/1128634/how-to-access-mounted-network-drive-on-windows-linux-subsystem/1261563) by user _gman_ from the superuser.com forum. Accessed 2021-02-18.
 
+# File Renaming
+More of my personal notes can be found [here](https://github.com/iLikeToBeAnonymous/Site_Lookup_from_ID/blob/imgScrapingByURLWithFileName/Bash_download_File_from_URL_and_change_name_on_download.md). I plan on cleaning these up and merging them into this repo.
+
+```bash
+mv 'oldFileName.pdf' 'newFileName.pdf'
+```
+
 # Using `curl` and `grep` to pull prices from Microcenter.com
 ```bash
 # Refresher course from:
