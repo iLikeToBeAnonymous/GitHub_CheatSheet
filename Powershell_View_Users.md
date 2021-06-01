@@ -13,3 +13,16 @@ which fields you want to view. For example, if you want to view the username and
 ```PowerShell
 Get-LocalUser | Select Name, SID
 ```
+
+Building on this, if you want to filter to only view user accounts that are enabled, you would expand this command (via piping) to be:
+
+```PowerShell
+Get-LocalUser | Select Name, SID, Enabled | Where-Object {$_.Enabled -match "True"}
+```
+
+A more verbose version uses the `Get-WmiObject`, which is not limited to listing accounts on the system where the command is run (unlike the `Get-LocalUser` command).
+This requires specifying the computer name, so I'll just substitute the environment variable `$env:ComputerName` for this. To replicate the command above, you would type
+
+```PowerShell
+Get-WmiObject -ComputerName $env:ComputerName -Class Win32_UserAccount -Filter "LocalAccount = True" | Select Name, Sid, Disabled 
+```
