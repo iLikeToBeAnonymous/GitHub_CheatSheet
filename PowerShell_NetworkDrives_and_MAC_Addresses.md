@@ -1,4 +1,14 @@
-Network drive paths can be viewed in several ways:
+# Local Machine MAC address(es)
+
+In either PowerShell or a command prompt, simply type `ipconfig /all` (without the `/all` flag, the MAC won't show).
+
+For a fancier way to get JUST the MAC addresses:
+
+```powershell
+ipconfig /all | Where-Object {$_ -match "Physical.*"}
+```
+
+# Network drive paths can be viewed in several ways:
 
 ```powershell
 NET USE
