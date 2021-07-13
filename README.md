@@ -61,7 +61,20 @@ git checkout
   ```gitattributes
   git push -u origin new-feature
   ```
-  
+___
+
+### Undoing Changes
+If you want to undo the changes to a specific file:
+```gitattributes
+git reset myfile.name
+```
+
+On the other hand, if you want a "nuke 'em all" solution to revert to the last commit:
+```gitattributes
+git reset HEAD --hard
+```
+___
+
 ### Renaming Files (the Right Way)
 If you rename a file via the file gui, Git doesn't seem to recognize it as a "rename" action, instead attributing it as a deletion of a file and the creation of a new one.
 
