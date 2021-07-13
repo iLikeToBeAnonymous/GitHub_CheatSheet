@@ -6,7 +6,7 @@ It was copied from a [blog post](https://jdhitsolutions.com/blog/powershell/7931
 I have not been able to get this to work outside of installing it, and I haven't yet attempted to install it. More research is required on my part.
 
 Alternatively, I might try to convert it into a function. The inspiration for the aforementioned blog post (which was cited therein) can be 
-found [here](https://community.spiceworks.com/topic/592770-extract-icon-from-exe-powershell).
+found [Spiceworks post](https://community.spiceworks.com/topic/592770-extract-icon-from-exe-powershell) by user [Duffney](https://community.spiceworks.com/people/duffney), who created it as a function.
 
 ```PowerShell
 # Extract-Icon.ps1
