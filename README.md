@@ -71,8 +71,21 @@ git reset myfile.name
 
 On the other hand, if you want a "nuke 'em all" solution to revert to the last commit:
 ```gitattributes
-git reset HEAD --hard
+git reset HEAD --hard #HEAD is optional
 ```
+
+Afterwards, if you want to further clean things up by removing files not under version control (probably a good idea), git has a command for this, but **use it with caution!**
+
+The `git clean` command removes files not under version control, and only those that are "seen" by git. In other words, new files that show up as "untracked files" under `git status` would get removed, but files specified in the `.gitignore` file would be left ontouched. Before doing any form of `git clean`, you should do a dry run:
+
+```gitattributes
+git clean --dry-run
+```
+
+If the only files that show up there are the ones you want removed, the go ahead and re-run the command, omitting the `--dry-run` part.
+> Further reading: [git-clean documentation](https://git-scm.com/docs/git-clean)
+
+>If you need more control over how git-clean works, you can always use the `-i` suffix, which is an interactive mode. You can read about it on [Atlassian's page](https://www.atlassian.com/git/tutorials/undoing-changes/git-clean)
 ___
 
 ### Renaming Files (the Right Way)
