@@ -26,3 +26,9 @@ This requires specifying the computer name, so I'll just substitute the environm
 ```PowerShell
 Get-WmiObject -ComputerName $env:ComputerName -Class Win32_UserAccount -Filter "LocalAccount = True" | Select Name, Sid, Disabled 
 ```
+
+If you're having difficulty with some accounts and want to see some slightly different details, modify the above command with to the following.
+
+```PowerShell
+Get-WmiObject -ComputerName $env:ComputerName -Class Win32_UserAccount | Select Name, PSComputerName, FullName, Disabled
+```
