@@ -1,6 +1,6 @@
 ___
 ## File Rename Automation in PowerShell
-
+## Appending a suffix
 To append a timestamp to a filename (NOTE: this format below inserts periods between `HH.mm.ss`):
 ```PowerShell
 get-item filepath | Rename-Item -NewName {$_.BaseName+(Get-Date $_.CreationTime -Format "yyyy-MM-dd HH.mm.ss" )+$_.Extension}
@@ -34,13 +34,44 @@ To append just a simple suffix, use the same code as above, but replace the `(Ge
 ```PowerShell
 Dir | Rename-Item -NewName {$_.BaseName+"—foobar"+$_.Extension}
 ```
+
+### PowerShell Rename with Find and Replace
+
+#### First, some notes: 
+- The property `$_.name` indicates the entire file name, **including the extension**.
+- The property `$_.BaseName` seems to indicate **only** the file name, but does **NOT include the extension**.
+- The property `$_.Extension` is the existing file extension on each file.
+
+#### Simple Rename and Replace
+The following assumes you already have PowerShell open in the directory in which you want the renaming to take place.
+In the current dir, all file names containing the partial string targeted for replacement will have that partial string value replaced with the new value, leaving the rest of the file name alone.
+```PowerShell
+Dir | Rename-Item -NewName {$_.name -replace "old_filename_part","new_filename_part"}
+```
+Because the above version leverages `$_.name` property, it is possible the file extension could also be renamed. This potential issue is circumvented by using the `$_BaseName` prop instead.
+```PowerShell
+Dir | Rename-Item -NewName {($_.BaseName -replace "old_filename_part","new_filename_part")+$_.Extension}
+```
+
+Of course, if you DO wish to change the file extension, you could restructure the above code in two ways. 
+- Using the `$_.name` prop (which in the example below would only change files ending in `.jpeg` to `.jpg`):
+```PowerShell
+Dir | Rename-Item -NewName {$_.name -replace "_.jpeg",".jpg"}
+```
+- Using the `$_.BaseName` prop (which would blindly change ALL file extensions in the dir to `.jpg`.:
+```PowerShell
+Dir | Rename-Item -NewName {$_.BaseName +".jpg"}
+```
+
 ___
-## Renaming in bash
+## Renaming in Bash
+### Simple Rename
 To just rename a file in bash (without moving it) you'd still use the "mv" command. Note that there are no spaces, and the file names include their extensions. 
 ```bash
 mv 'oldFileName.pdf' 'newFileName.pdf'
 ```
-A more robust way is to use the bash `rename` command.
+### File Rename with Regex Match and Replace
+A more robust way is to use the bash `rename` command
 _Sourced from: https://www.howtogeek.com/423214/how-to-use-the-rename-command-on-linux/_
 The "rename" command is not part of a the standard Linux distro, so you must install it:
 ```bash
