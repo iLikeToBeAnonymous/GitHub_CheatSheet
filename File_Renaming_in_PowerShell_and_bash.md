@@ -38,7 +38,7 @@ Of course, you could also use this to prepend a prefix as well:
 ```PowerShell
 Dir | Rename-Item -NewName {"Some_Prefix_Here_"+$_.BaseName+$_.Extension}
 ```
-
+___
 ### PowerShell Rename with Find and Replace
 
 #### First, some notes: 
@@ -75,6 +75,12 @@ For example, lets say you have a list of files with a date suffix formatted `yyy
 Get-ChildItem *'2021-09-2'*'073'* | Rename-Item -NewName {$_.name -replace "old_filename_part","new_filename_part"}
 ```
 **Note:** in the `-replace` expressions above, regular expressions can be used if the double quotes shown are replaced with single quotes. However, this doesn't seem to work in the `Get-ChildItem` part of the filter. 
+
+___
+### Further Reading
+- [PowerShell's "rename-item" command](https://www.pdq.com/powershell/rename-item/)
+- [PowerShell's "move-item" command](https://www.pdq.com/powershell/move-item/)
+___
 ___
 ## Renaming in Bash
 ### Simple Rename
