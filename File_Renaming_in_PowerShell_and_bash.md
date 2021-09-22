@@ -34,6 +34,10 @@ To append just a simple suffix, use the same code as above, but replace the `(Ge
 ```PowerShell
 Dir | Rename-Item -NewName {$_.BaseName+"—foobar"+$_.Extension}
 ```
+Of course, you could also use this to prepend a prefix as well:
+```PowerShell
+Dir | Rename-Item -NewName {"Some_Prefix_Here_"+$_.BaseName+$_.Extension}
+```
 
 ### PowerShell Rename with Find and Replace
 
@@ -63,6 +67,14 @@ Dir | Rename-Item -NewName {$_.name -replace "_.jpeg",".jpg"}
 Dir | Rename-Item -NewName {$_.BaseName +".jpg"}
 ```
 
+#### Filtering before Renaming
+The previous renaming examples attempt to make changes to all files in a directory, but a more graceful approach utilizes the `Get-ChildItem` command. 
+
+For example, lets say you have a list of files with a date suffix formatted `yyyy-mm-dd-HHmm` as used in the examples earlier. Within that list of files, you only want to perform a renaming action on the files have suffix for the year 2021, the month 09, and between 07:30 and 07:39, you could do the following (_note the use of **single quotes** in the `Get-ChildItem` statement_)
+```PowerShell
+Get-ChildItem *'2021-09-2'*'073'* | Rename-Item -NewName {$_.name -replace "old_filename_part","new_filename_part"}
+```
+**Note:** in the `-replace` expressions above, regular expressions can be used if the double quotes shown are replaced with single quotes. However, this doesn't seem to work in the `Get-ChildItem` part of the filter. 
 ___
 ## Renaming in Bash
 ### Simple Rename
