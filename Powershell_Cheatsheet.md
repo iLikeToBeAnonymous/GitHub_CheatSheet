@@ -37,6 +37,36 @@ NOTE: the `>` and `>>` both send a specified stream to an output file you've def
 "Hello World!" > myFileName.txt
 ```
 Further reading can be found [here](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_redirection?view=powershell-7.1).
+___
+## File Rename Automation
+To append a timestamp to a filename:
+```PowerShell
+get-item filepath | Rename-Item -NewName {$_.BaseName+(Get-Date $_.CreationTime -Format "yyyy-MM-dd HH.mm.ss" )+$_.Extension}
+```
+
+To change the name of a folder named "screenshots" you'd paste type the code (as it appears below) into PowerShell:
+```PowerShell
+# Declare your variables
+$folderWithPictures = C:/users/yourNameHere/onedrive/pictures/screenshots
+$somePrefix = "_vs_"
+
+
+# Preview changes only (NOTE: $_.BaseName is a system var)
+ls $folderWithPictures | foreach-object {$_.BaseName+$somePrefix+(Get-Date $_.CreationTime -Format "yyyy-MM-dd-HHmm" )+$_.Extension}
+
+# Actually execute the changes
+get-item $folderWithPictures | rename-item -newname {$_.BaseName + $somePrefix + (Get-Date $_.CreationTime -Format "yyyy-MM-dd-HHmm") + $_.Extension}
+```
+
+If the PowerShell instance is already open within the target folder, the `$folderWithPictures` variable isn't needed, and the code to execute the changes can be simplified to:
+```PowerShell
+# Note that the var $somePrefix is inlined as a string in the code below
+# Preview
+ls | foreach-object {$_.BaseName+"_vs_"+(Get-Date $_.CreationTime -Format "yyyy-MM-dd-HHmm" )+$_.Extension}
+
+# Execute the changes
+Dir | Rename-Item -NewName {$_.BaseName+"_vs_"+(Get-Date $_.CreationTime -Format "yyyy-MM-dd-HHmm" )+$_.Extension}
+```
 
 ___
 ## Symlinks (fancy shortcuts)
