@@ -39,7 +39,7 @@ NOTE: the `>` and `>>` both send a specified stream to an output file you've def
 Further reading can be found [here](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_redirection?view=powershell-7.1).
 ___
 ## File Rename Automation
-To append a timestamp to a filename:
+To append a timestamp to a filename (NOTE: this format below inserts periods between `HH.mm.ss`):
 ```PowerShell
 get-item filepath | Rename-Item -NewName {$_.BaseName+(Get-Date $_.CreationTime -Format "yyyy-MM-dd HH.mm.ss" )+$_.Extension}
 ```
@@ -66,6 +66,11 @@ ls | foreach-object {$_.BaseName+"_vs_"+(Get-Date $_.CreationTime -Format "yyyy-
 
 # Execute the changes
 Dir | Rename-Item -NewName {$_.BaseName+"_vs_"+(Get-Date $_.CreationTime -Format "yyyy-MM-dd-HHmm" )+$_.Extension}
+```
+
+To append just a simple suffix, use the same code as above, but replace the `(Get-Date....)` code section with your desired string.
+```PowerShell
+Dir | Rename-Item -NewName {$_.BaseName+"—foobar"+$_.Extension}
 ```
 
 ___
