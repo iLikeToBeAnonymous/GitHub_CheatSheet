@@ -160,7 +160,36 @@ The Set-ExecutionPolicy options are:
 - `RemoteSigned` – Downloaded scripts must be signed by a trusted publisher.
 - `Unrestricted` – All Windows PowerShell scripts can be run.
 
-### Simple Step to add a domain user to the Administrators group:[<sup>1</sup>](#1)
+## Running a _.bat_ File from a Network Path
+If you attempt to run a _.bat_ file (that does things within the network folder), you'll get an error message like below...
+```CMD
+cd \\myServerName\someNetworkFolder
+@REM running the above line yields the following error:
+CMD does not support UNC paths as current directories.
+```
+The ideal way of bypassing this is to map the network folder as a network drive. However, that isn't always an option. A solution utilizes the `pushd` and `popd` commands.
+This was extrapolated by reading posts found [here](https://superuser.com/questions/282963/browse-an-unc-path-using-windows-cmd-without-mapping-it-to-a-network-drive)
+```bat
+@REM Save the network path from which the script is running as a variable.
+set currentDir=%~dp0
+
+@REM The strange syntax below says: 
+@REM "starting from the 0 position of the %currentDir% string, extract the first two 
+@REM  chars as a substring."
+set firstTwoChars=%currentDir:~0,2%
+
+@REM If the string val of %firstTwoChars% is two back strokes (indicating a UNC path), 
+@REM make a temp drive map using the pushd command.
+if "%firstTwoChars%"=="\\" pushd %currentDir%
+
+@REM Do the rest of your commands in here, such as bypassing a restricted execution policy on a PowerShell script.
+PowerShell.exe -Command "powershell -executionpolicy bypass -File .\myScriptName.ps1"
+
+@REM Do the check again, and use the popd command to release the temp mapped drive.
+if "%firstTwoChars%"=="\\" popd
+```
+
+## Simple Step to add a domain user to the Administrators group:[<sup>1</sup>](#1)
 
 In PowerShell...
 
@@ -170,23 +199,23 @@ Add-LocalGroupMember -Group Administrators -Member $env:USERDOMAIN\<username>
 
 Note: Make sure you run PowerShell "As Administrator".
 
-### Write out list of currently running services[<sup>2</sup>](#2)
+## Write out list of currently running services[<sup>2</sup>](#2)
 
 ```powershell
 Get-Service | Where-Object {$_.Status -eq "Running"} > myRunningServices.txt
 ```
 
-### View all open/listening ports
+## View all open/listening ports
 The following is copied from [gist:2558512](https://gist.github.com/steelcm/2558512) by member [Chris Steel (steelcm)](https://github.com/steelcm)
 
 ```powershell
 PS C:\> netstat -an | select-string -pattern "listening"
 ```
 
-### Copying Folders and Files
+## Copying Folders and Files
 Personally, the two most-useful methods of copying are the [`copy-item`](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/copy-item?view=powershell-7.1) and [`robocopy`](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/robocopy) commands. The `copy-item` command is nice for copying a single file, but `robocopy` seems to still be the star when it comes to copying directories.
 
-#### Robocopy
+### Robocopy
 To copy a folder and ALL its contents:
 
 ```PowerShell
