@@ -30,7 +30,7 @@ $DeviceId = ($DeviceId.Split(":").trim())
 $DeviceId = $DeviceId[1]
 }
 ```
-Or hypothetically as a one-liner:
+Or hypothetically as slightly messy one-liner:
 ```PowerShell
-$DsregCmdStatus = dsregcmd /status | -match "DeviceID"
+dsregcmd /status | Where-Object {$_ -match ".*DeviceID\b"}
 ```
