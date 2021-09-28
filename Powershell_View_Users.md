@@ -32,3 +32,8 @@ If you're having difficulty with some accounts and want to see some slightly dif
 ```PowerShell
 Get-WmiObject -ComputerName $env:ComputerName -Class Win32_UserAccount | Select Name, PSComputerName, FullName, Disabled
 ```
+
+Another useful version is:
+```PowerShell
+Get-WmiObject -ComputerName $env:ComputerName -Class Win32_UserAccount | Select PSComputerName, Caption, __SERVER, FullName
+```
