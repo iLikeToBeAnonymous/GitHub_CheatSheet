@@ -20,18 +20,24 @@ After some fiddling, I found that the thing that gives more useful information i
 
 ## Viewing AzureAD Device ID
 _From [post](https://superuser.com/questions/1212477/determine-azure-ad-device-id) by user Alkum_
+
 As a script:
 ```PowerShell
 $DsregCmdStatus = dsregcmd /status
 if($DsregCmdStatus -match "DeviceId")
 {
 $DeviceId = $DsregCmdStatus -match "DeviceID"
-$DeviceId = ($DeviceId.Split(":").trim())
-$DeviceId = $DeviceId[1]
+$DeviceId = ($DeviceId.Split(":").trim()) # splits the resulting string into two lines
+$DeviceId = $DeviceId[1] # print the second line (which contains the info you're looking for)
 }
 ```
-Which I distilled into a slightly messy one-liner:
+NOTE: Sometimes, it's just DeviceID, other times, it's WorkplaceDeviceID
+
+The above can be distilled into a slightly messy one-liner:
 ```PowerShell
-# Sometimes, it's just DeviceID, other times, it's WorkplaceDeviceID
-dsregcmd /status | Where-Object {$_ -match ".*DeviceID\b"}
+DsRegCmd /status | Where-Object {$_ -match ".*DeviceID\b"}
+```
+...which could also be written as:
+```PowerShell
+DsRegCmd /status | select-string -pattern ".*DeviceID\b"
 ```
