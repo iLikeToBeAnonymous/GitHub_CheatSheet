@@ -61,6 +61,12 @@ git checkout
   ```gitattributes
   git push -u origin new-feature
   ```
+  
+If you already have a multi-branch local repository and want to push all of its changes at once to GitHub, you can easily do so via:
+
+```gitattributes
+git push --all origin
+```
 ___
 
 ### Undoing Changes
