@@ -41,3 +41,7 @@ DsRegCmd /status | Where-Object {$_ -match ".*DeviceID\b"}
 ```PowerShell
 DsRegCmd /status | select-string -pattern ".*DeviceID\b"
 ```
+If you only want the DeviceID to print, you can use the following one-liner. However, it is not thoroughly tested, so it could potentially omit some desirable results.
+```PowerShell
+((DsRegCmd /status | Where-Object {$_ -match ".*DeviceID\b"}).Split(":").trim())[1]
+```
