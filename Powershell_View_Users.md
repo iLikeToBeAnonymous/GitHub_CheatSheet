@@ -37,3 +37,13 @@ Another useful version is:
 ```PowerShell
 Get-WmiObject -ComputerName $env:ComputerName -Class Win32_UserAccount | Select PSComputerName, Caption, __SERVER, FullName
 ```
+
+## Editing User Accounts via Admin PowerShell
+### To disable a local account <small><sup>[source](https://winaero.com/disable-enable-user-account-windows-10/)</sup></small>
+(to enable, use "yes" instead of "no")
+```PowerShell
+net user "someUserName" /active:no
+```
+
+
+### Hiding User Accounts from Login Screen <small><sup>[source](https://winaero.com/how-to-hide-user-accounts-from-the-login-screen-in-windows-10/)</sup></small>
