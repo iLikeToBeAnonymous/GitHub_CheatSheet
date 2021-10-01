@@ -74,7 +74,12 @@ For example, lets say you have a list of files with a date suffix formatted `yyy
 ```PowerShell
 Get-ChildItem *'2021-09-2'*'073'* | Rename-Item -NewName {$_.name -replace "old_filename_part","new_filename_part"}
 ```
-**Note:** in the `-replace` expressions above, regular expressions can be used if the double quotes shown are replaced with single quotes. However, this doesn't seem to work in the `Get-ChildItem` part of the filter. 
+**Note:** in the `-replace` expressions above, regular expressions can be used if the double quotes shown are replaced with single quotes. (This doesn't seem to work in the `Get-ChildItem` part of the filter).
+
+If, for example, you wished to replace all white-spaces directly with underscores:
+```PowerShell
+Get-ChildItem *' '* | Rename-Item -NewName {($_.BaseName -replace '\s+','_')+$_.Extension}
+``` 
 
 ___
 ### Further Reading
