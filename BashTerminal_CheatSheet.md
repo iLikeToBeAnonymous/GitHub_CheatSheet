@@ -10,6 +10,17 @@
 - `sudo apt-get clean`
   - this cleans the download cache after new packages have been installed.
 
+# Making a Script Exececutable
+Making a `.sh` script executable isn't actually turning it into a compiled script. Rather, you're giving it permission to run. To do so, type:
+```bash
+chmod +x /path/to/yourscript.sh
+```
+
+To then execute the script from the directory where it is located, type:
+```bash
+./yourscript.sh
+```
+
 
 # Mapping a new Network Drive (Works in WSL)
 
