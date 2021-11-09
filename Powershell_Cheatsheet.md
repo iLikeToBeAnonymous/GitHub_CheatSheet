@@ -1,3 +1,10 @@
+## Checking if a file exists <sup>[adamtheautomator.com](https://adamtheautomator.com/powershell-check-if-file-exists/)</sup>
+
+If checking for a specific file (and not a folder), use the following:
+```PowerShell
+Test-Path -Path 'C:\temp\important_file.txt' -PathType Leaf
+```
+> Note that the -PathType Leaf part tells the cmdlet to check for a file and not a directory explicitly.
 
 ## Filtering Results
 
