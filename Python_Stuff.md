@@ -1,3 +1,31 @@
+# Installing Python
+## On Windows
+### _Ninite_
+Installing via Ninite is nice (and relatively quick), but it doesn't automatically add the Python folder or the Python Scripts folder to the system path (meaning the `Path` system environment variable if you are installing for all users).
+
+However, this is relatively easily overcome by adding them manually.
+
+### _Windows Store_
+Supposedly adds to the path correctly on install, but there are quite of few posts from people stating this hasn't worked for them.
+
+### _Chocolatey_
+Arguably the best way to install Python on Windows. Automatically adds to the system path. Useful for maintaining and updating as well.
+See this [post/answer](https://stackoverflow.com/questions/57421669/question-about-pip-using-python-from-windows-store) by stackoverflow user Weberth Lins for more details.
+
+
+## Checking if Python is in your path
+The system path is accessible in PowerShell via `$env:path`. However, this returns a single string in which all the values are separated with semicolons. To split this into a list, use the _.Split_ function with a semicolon as the delimeter: `$env:path.Split(";")`. However, the resulting array can be quite large, so to filter it down to only show entries for Python, you can use the following:
+```PowerShell
+$env:path.Split(";") | where {$_ -like '*Python*'} #(the "like" string is not case-sensitive)
+```
+
+Instead of a `-like` flag, you could use a `match` flag instead:
+```PowerShell
+$env:path.Split(";") | where {$_ -match '.*[P|p]ython.*'} #(Also not case-sensitive, so the [P|p] isn't necessary)
+```
+
+---
+
 ## Running Your File
 
 ### First, make sure that everything you need for compiling is already installed. If you follow the next steps, you'll be able to compile C and C++ code as well as others..
