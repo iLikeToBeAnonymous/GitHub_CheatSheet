@@ -7,6 +7,15 @@ According to post on [tenforums.com] by user _hsehestedt_:
 pnputil /export-driver * C:\MyDrivers
 ```
 
+User _hsehestedt_ goes on to explain how to subsequently reinstall all of those drivers (such as in the event you've had to do a clean Windows installation)
+> ...NOTE: This command is assuming that the thumb drive is `D:` and that the drivers are in the folder called `MyDrivers`. <br>
+> Change the drive letter and path if you need to do so. <br>
+> Code:
+
+```Powershell
+pnputil /add-driver D:\MyDrivers\*.inf /subdirs /install
+```
+
 
 ---
 
