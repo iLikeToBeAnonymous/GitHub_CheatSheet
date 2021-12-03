@@ -1,3 +1,29 @@
+## Coding Loops with and without Line Breaks
+
+Code can be written cleanly with nesting and line breaks such as below:
+
+```PowerShell
+$myIndx = 0 # Declare a variable to keep track of an array index
+$myTxtAry | ForEach-Object { # An array gets piped into a ForEach-Object loop
+  Write-Output("Index: $myIndx Value $_") # The "$_" is the native way of representing the contents of a particular object in this loop
+  $myIndx++ # Increment the index before the next turn of the loop.
+}
+```
+
+...Or the more compactly with the use of semicolons:
+
+```PowerShell
+$myIndx = 0; $myTxtAry | ForEach-Object {Write-Output("Index: $myIndx Value $_"); $myIndx++}
+```
+
+It is possible to shorten this even further by the use of [script blocks](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_script_blocks?view=powershell-7.2):
+
+```PowerShell
+$myTxtAry | % {$myIndx=0} {"Value:$_ Index:$myIndx"; $myIndx++}
+```
+
+___
+
 ## Checking if a file exists <sup>[adamtheautomator.com](https://adamtheautomator.com/powershell-check-if-file-exists/)</sup>
 
 If checking for a specific file (and not a folder), use the following:
