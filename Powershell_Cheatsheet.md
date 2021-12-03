@@ -5,7 +5,9 @@ Code can be written cleanly with nesting and line breaks such as below:
 ```PowerShell
 $myIndx = 0 # Declare a variable to keep track of an array index
 $myTxtAry | ForEach-Object { # An array gets piped into a ForEach-Object loop
-  Write-Output("Index: $myIndx Value $_") # The "$_" is the native way of representing the contents of a particular object in this loop
+  Write-Output("Index: $myIndx Value $_") <# The "$_" is the native way of
+                                             representing the contents of a 
+                                             particular object in this loop. #>
   $myIndx++ # Increment the index before the next turn of the loop.
 }
 ```
