@@ -34,6 +34,99 @@ Test-Path -Path 'C:\temp\important_file.txt' -PathType Leaf
 ```
 > Note that the -PathType Leaf part tells the cmdlet to check for a file and not a directory explicitly.
 
+___
+
+## Viewing an object's properties by name
+PowerShell objects are similar to objects in many other programming languages, but are more finicky. If you think of JavaScript objects being in key/value pairs, PowerShell objects contain data in what they call Property/PropertyValue pairs.
+
+For this exercise, consider how to get the properties of a file, `nsis-3.06.1-setup.exe`. If you type the following, you'll get a variety of details about the file:
+
+```PowerShell
+# Pretend that you opened a PowerShell instance within the containing folder for the file.
+$myFileName = 'nsis-3.06.1-setup.exe'
+Get-Item -Path $myFileName | Select-Object *
+```
+<details><summary>Expand to show results of above code</summary>
+
+  ```PowerShell
+  PSPath            : Microsoft.PowerShell.Core\FileSystem::F:\Downloads\nsis-3.06.1-setup.exe
+  PSParentPath      : Microsoft.PowerShell.Core\FileSystem::F:\Downloads
+  PSChildName       : nsis-3.06.1-setup.exe
+  PSDrive           : F
+  PSProvider        : Microsoft.PowerShell.Core\FileSystem
+  PSIsContainer     : False
+  Mode              : -a----
+  VersionInfo       : File:             F:\Downloads\nsis-3.06.1-setup.exe
+                      InternalName:
+                      OriginalFilename:
+                      FileVersion:      3.06.1
+                      FileDescription:  NSIS Setup
+                      Product:
+                      ProductVersion:
+                      Debug:            False
+                      Patched:          False
+                      PreRelease:       False
+                      PrivateBuild:     False
+                      SpecialBuild:     False
+                      Language:         English (United States)
+
+  BaseName          : nsis-3.06.1-setup
+  Target            : {}
+  LinkType          :
+  Name              : nsis-3.06.1-setup.exe
+  Length            : 1538352
+  DirectoryName     : F:\Downloads
+  Directory         : F:\Downloads
+  IsReadOnly        : False
+  Exists            : True
+  FullName          : F:\Downloads\nsis-3.06.1-setup.exe
+  Extension         : .exe
+  CreationTime      : 2021-05-03 12:58:30
+  CreationTimeUtc   : 2021-05-03 16:58:30
+  LastAccessTime    : 2021-12-08 09:07:36
+  LastAccessTimeUtc : 2021-12-08 14:07:36
+  LastWriteTime     : 2021-05-03 12:58:40
+  LastWriteTimeUtc  : 2021-05-03 16:58:40
+  Attributes        : Archive
+  ```
+  
+</details>
+
+Notice that some properties (such as `Extension`) are top-level and can be accessed directly via the [`Get-ItemProperty` ](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-itemproperty?view=powershell-7.2)
+command:
+
+```PowerShell
+Get-ItemProperty -Path $myFileName -Name 'Extension'
+```
+
+The above command actually retrieves the object that is that property. What you actually want is to return the _value_ of the property named "Extension," so you instead need to use the [`Get-ItemPropertyValue`](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-itempropertyvalue?view=powershell-7.2)
+command:
+
+```PowerShell
+Get-ItemPropertyValue -Path $myFileName -Name 'Extension'
+# Gives desired result of ".exe"
+```
+
+If we try this same command on a multi-level property (such as the `VersionInfo` demonstrated in the original console output above), we once again get a sub-object with multiple nested values:
+<details><summary>Expand to show results of above code</summary>
+
+  ```PowerShell
+  PS F:\Downloads> Get-ItemPropertyValue -Path $myFileName -Name 'VersionInfo'
+
+  ProductVersion   FileVersion      FileName
+  --------------   -----------      --------
+                   3.06.1           F:\Downloads\nsis-3.06.1-setup.exe
+  ```
+  
+</details>
+
+Ultimately, the easiest way of retrieving the value is this:
+```PowerShell
+(Get-Item -Path $myFileName).VersionInfo.FileVersion
+# Above code reveals just the detail we want: "3.06.1"
+```
+
+___
 ## Filtering Results
 
 All available timezones available to the systme can be viewed via `tzutil /l`. However, this yields an exceedingly verbose response. If, for example, you only want to see results for "Alaska," you could...
