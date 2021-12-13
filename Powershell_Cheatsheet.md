@@ -129,7 +129,7 @@ Ultimately, the easiest way of retrieving the value is this:
 ___
 ## Filtering Results
 
-All available timezones available to the systme can be viewed via `tzutil /l`. However, this yields an exceedingly verbose response. If, for example, you only want to see results for "Alaska," you could...
+All available timezones available to the system can be viewed via `tzutil /l`. However, this yields an exceedingly verbose response. If, for example, you only want to see results for "Alaska," you could...
 
 ```Powershell
 > tzutil /l | Where-Object {$_ -match ".*laska.*"}
@@ -143,6 +143,51 @@ The `$_` above basically says that any property can match the regular expression
 ```Powershell
 Get-TimeZone -ListAvailable | Where-Object {$_.BaseUtcOffset -match ".*-09:00.*"}
 ```
+
+---
+### _A slightly more complicated example_
+Let's try filtering out details from scheduled tasks in Task Scheduler. If we simply run the following:
+
+```PowerShell
+Get-ScheduledTask -TaskName "Microsoft*" | Select-Object "*"
+```
+...the results are detailed and difficult to read (just trust me on this, or run the command yourself to see the results).
+For this example, we'll be trimming down those results just so we can see the author name. The following three lines all yield the same output, just via slightly different routes:
+
+```PowerShell
+# For-loop
+(Get-ScheduledTask -TaskName "Microsoft*" | Select-Object "*").CimInstanceProperties | ForEach-Object {if($_.Name -eq 'Author'){Write-Output($_)}}
+
+# A Where-Object with braced query
+(Get-ScheduledTask -TaskName "Microsoft*" | Select-Object "*").CimInstanceProperties | Where-Object {$_.Name -like 'Author'}; Write-Output($_)
+
+# A Where-Object with a naked property filter
+(Get-ScheduledTask -TaskName "Microsoft*" | Select-Object "*").CimInstanceProperties | Where-Object -Property Name -like 'Author'; Write-Output($_);
+```
+I want to telegraph the idea that each of the above three lines produce identical results, so I only included the results once below to save space. (Note: on my computer, each line produced three objects)
+<details><summary><em>Click to expland the console results for the above three commands.</em></summary>
+
+```PowerShell
+  Name            : Author
+  Value           : $(@%SystemRoot%\system32\compattelrunner.exe,-501)
+  CimType         : String
+  Flags           : Property, NotModified
+  IsValueModified : False
+
+  Name            : Author
+  Value           : Microsoft Corporation
+  CimType         : String
+  Flags           : Property, NotModified
+  IsValueModified : False
+
+  Name            : Author
+  Value           : Microsoft Corporation
+  CimType         : String
+  Flags           : Property, NotModified
+  IsValueModified : False
+```
+  
+</details>
 
 ___
 ## How to Save a List of a Folder's Contents to a .txt File
