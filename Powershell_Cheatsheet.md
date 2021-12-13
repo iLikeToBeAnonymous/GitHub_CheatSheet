@@ -12,7 +12,7 @@ $myTxtAry | ForEach-Object { # An array gets piped into a ForEach-Object loop
 }
 ```
 
-...Or the more compactly with the use of semicolons:
+...Or more compactly with the use of semicolons:
 
 ```PowerShell
 $myIndx = 0; $myTxtAry | ForEach-Object {Write-Output("Index: $myIndx Value $_"); $myIndx++}
