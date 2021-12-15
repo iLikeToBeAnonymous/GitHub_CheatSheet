@@ -21,21 +21,47 @@ The above reference is highly-recommended further reading, giving a distinct exp
 
 ## Adding a New Registry Entry
 
+The following examples will be using these declared variables:
+
+```PowerShell
+$regKeyPath = 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Nla\Cache\Intranet\myDemoKey'
+$regEntryName = 'someRegItem'
+$regEntryVal = 777
+```
+
 ### _New-Item and New-ItemProperty_
 The `New-Item` command is able to do more than create new files and folders. It is also able to create new subkeys ("folders") in Windows Registry.
 A registry entry (an "item" within a registry "folder") can subsequently be created via the `New-ItemProperty` command.
 
 ```PowerShell
 # Create a registry subkey within the "Intranet" subkey
-New-Item -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Nla\Cache\Intranet\myDemoKey'
+New-Item -Path $regKeyPath
 
 # Now add a new registry entry (a named registry "item") to that key
-New-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Nla\Cache\Intranet\myDemoKey' -Name 'someRegItem' -Value 777
+New-ItemProperty -Path $regKeyPath -Name $regEntryName -Value $regEntryVal
 ```
 
 **NOTE:** If the second command were to be executed by itself, the new registry value would not be created because the key to contain it does not already exist.
 
+Further Reading:
+ - _Microsoft.PowerShell.Management_, ["New-Item"](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/new-item?view=powershell-7.2) 
+ - _Microsoft.PowerShell.Management_, ["New-ItemProperty"](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/new-itemproperty?view=powershell-7.2)
+ - _Microsoft.PowerShell.Management_, ["Set-Item"](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/set-item?view=powershell-7.2)
+ - _Microsoft.PowerShell.Management_, ["Set-ItemProperty"](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/set-itemproperty?view=powershell-7.2)
+
 ---
+
+### [_Reg Add_](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/reg-add)
+
+In the example below, `$regKeyPath` needed to be changed because the key `HKLM` is **NOT** followed by a colon, unlike in the `New-Item`/`New-ItemProperty` example.
+```PowerShell
+$regKeyPath = 'HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Nla\Cache\Intranet\myDemoKey'
+Reg Add $regKeyPath /v $regEntryName /d $regEntryVal /f # The "/f" flag adds to registry without prompt for confirmation
+```
+
+
+----
+----
 
 ## Checking if a Registry Entry Exists
 
