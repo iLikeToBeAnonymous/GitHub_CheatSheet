@@ -53,15 +53,32 @@ Further Reading:
 
 ### [_Reg Add_](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/reg-add)
 
-In the example below, `$regKeyPath` needed to be changed because the key `HKLM` is **NOT** followed by a colon, unlike in the `New-Item`/`New-ItemProperty` example.
+In the example below, `$regKeyPath` needed to be changed because the key `HKLM` is **NOT** followed by a colon, unlike in the `New-Item`/`New-ItemProperty` example. <br>
+Additionally, note that the subkey does not need to be created prior to creating the registry entry item.
 ```PowerShell
 $regKeyPath = 'HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Nla\Cache\Intranet\myDemoKey'
 Reg Add $regKeyPath /v $regEntryName /d $regEntryVal /f # The "/f" flag adds to registry without prompt for confirmation
 ```
 
+### _[Registry.SetValue Method](https://docs.microsoft.com/en-us/dotnet/api/microsoft.win32.registry.setvalue?view=net-6.0)_
+
+In the example below, `$regKeyPath` requires that the "HKEY_LOCAL_MACHINE" be written out instead of abbreviated to "HKLM"
+```PowerShell
+$regKeyPath = 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Nla\Cache\Intranet\myDemoKey'
+$regEntryName = 'someRegItem'
+$regEntryVal = 777
+[Microsoft.Win32.Registry]::SetValue($regKeyPath,$regEntryName,$regEntryVal)
+```
 
 ----
 ----
 
 ## Checking if a Registry Entry Exists
 
+### _[Registry.GetValue Method](https://docs.microsoft.com/en-us/dotnet/api/microsoft.win32.registry.getvalue?view=net-6.0)_
+Note: ALL THREE PARAMETERS MUST BE PROVIDED FOR THIS TO NOT THROW ERRORS!
+
+```PowerShell
+$defaultMsg = "If a registry entry doesn't exist, this gets returned."
+[Microsoft.Win32.Registry]::GetValue('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon','AutoRestartShell',$defaultMsg)
+```
