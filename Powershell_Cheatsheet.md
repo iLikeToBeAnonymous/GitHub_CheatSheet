@@ -24,6 +24,61 @@ It is possible to shorten this even further by the use of [script blocks](https:
 $myTxtAry | % {$myIndx=0} {"Value:$_ Index:$myIndx"; $myIndx++}
 ```
 
+----
+
+## Working with Variables and Garbage Collection
+
+### The [`New-Variable` Command](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/new-variable?view=powershell-7.2)
+Creates a new variable in PowerShell. It can simply be declared, or can be declared with a value. In this case, it's declared as ReadOnly, has a value, and includes a description.
+
+```PowerShell
+New-Variable -Name 'myTargetFilePath' -Value 'C:\Windows\System32' -Description 'An example variable' -Option ReadOnly
+```
+
+### The [`Get-Variable` Command](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/get-variable?view=powershell-7.2)
+To retrieve details about a specifically-named variable.  In this example, the variable is `$myTargetFilePath` from before. <br>
+Note that the "Description" field is populated with the text from the previous step.
+
+```PowerShell
+Get-Variable -Name 'myTargetFilePath' | Select-Object *
+# OR...
+Get-Variable | Select-Object * | Where-Object {$_.Name -like "myTargetFilePath"}
+```
+
+### The [`Set-Variable` Command](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/set-variable?view=powershell-7.2)
+Similar to the `New-Variable` command, but useable for updating the value and other parameters of an already-existing variable. 
+If you want to use this command on a ReadOnly variable, you'll have to include the `-Force` flag as shown below. The example below not only changes
+the value of the variable, it also removes the ReadOnly option.
+
+```PowerShell
+Set-Variable -Name 'myTargetFilePath' -Value 'C:\Windows\addins' -Option None -Force
+```
+
+### The [`Clear-Variable` Command](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/clear-variable?view=powershell-7.2)
+Clears the value of a variable, but does not clear other parameters (such as the description)
+```PowerShell
+Clear-Variable -Name 'myTargetFilePath'
+```
+
+### The [`Remove-Variable` Command](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/remove-variable?view=powershell-7.2)
+Deletes a variable and its value. Has multiple parameters useful for performing bulk operations, including 
+an allowance to specify the scope of the variables to delete.
+
+```PowerShell
+Remove-Variable 'myTargetFilePath'
+```
+
+This can be implemented in a more elegant solution such as below.
+
+```PowerShell
+$myVarList = '$myTargetFilePath', 'currentFileContent','myVarList'
+<#  In the try statement below, if -ErrorAction is not specified, the catch block won't be triggered.
+    In the catch statement below, the $_ is framed in quotes so it will only write-out the string part of the error message. #>
+$myVarList | ForEach-Object {try{Remove-Variable -Name $_ -ErrorAction Stop}catch{Write-Output("$_")}}
+
+[System.GC]::Collect() # Garbage collection.
+```
+
 ___
 
 ## Checking if a file exists <sup>[adamtheautomator.com](https://adamtheautomator.com/powershell-check-if-file-exists/)</sup>
