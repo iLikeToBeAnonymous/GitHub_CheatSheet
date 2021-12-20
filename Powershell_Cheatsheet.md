@@ -443,7 +443,7 @@ PS C:\> netstat -an | select-string -pattern "listening"
 ## Copying Folders and Files
 Personally, the two most-useful methods of copying are the [`copy-item`](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/copy-item?view=powershell-7.1) and [`robocopy`](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/robocopy) commands. The `copy-item` command is nice for copying a single file, but `robocopy` seems to still be the star when it comes to copying directories.
 
-### Robocopy
+### _Robocopy_
 To copy a folder and ALL its contents:
 
 ```PowerShell
@@ -468,6 +468,41 @@ $copyTo = "D:\myFolderClone"
 $someFile = myFileName.txt
 robocopy $copyFrom $copyTo $someFile /mt /zb /e /is
 ```
+
+### _[`Copy-Item` Commandlet](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/copy-item?view=powershell-7.2)_
+
+NOTE: the `Copy-Item` commandlet requires that the destination folder already exist. Mutiple levels of a folder path can be created at once via the `New-Item` commandlet.
+
+<details><summary>Expand to show example of creating multiple levels of folders...</summary>
+
+  ```PowerShell
+  New-Item -Path 'C:\Some_Folder\Some_Subfolder' -ItemType 'directory'
+  ```
+  
+</details>
+
+To copy a single file:
+
+```PowerShell
+Copy-Item -Path 'C:\Original_Folder\My_file.txt' -Destination 'C:\Some_other_folder\My_copied_file.txt'
+```
+
+Using `Copy-Item` to copy folders and their contents is a little bit trickier than using `robocopy`, but it is still relatively straightforward. <br>
+In the following example, the `\*` part of the path indicates that all the contents of the original folder are copied to the new destination, but not the folder itself. <br>
+In the example below, all the files WITHIN the "Pictures" folder are copied to the "Graphics" folder. (_Note the use of double quotes to facilitate the use of the wildcard character_)
+
+```PowerShell
+Copy-Item -Path "C:\Pictures\*" -Destination 'C:\Graphics' -Recurse
+```
+
+The next example omits the `\*`, and in the result, a copy of the "Pictures" folder is a child of the "Graphics" folder (all the contents of the "Pictures" folder are copied over as well).
+
+```PowerShell
+Copy-Item -Path 'C:\Pictures' -Destination 'C:\Graphics' -Recurse
+```
+
+
+
 ___
 ### References:
 <a id="1">[1]</a> 
