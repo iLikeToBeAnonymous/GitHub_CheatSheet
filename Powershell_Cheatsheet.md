@@ -184,6 +184,7 @@ Ultimately, the easiest way of retrieving the value is this:
 ___
 ## Filtering Results
 
+### _A Basic Example with Timezones_
 All available timezones available to the system can be viewed via `tzutil /l`. However, this yields an exceedingly verbose response. If, for example, you only want to see results for "Alaska," you could...
 
 ```Powershell
@@ -200,7 +201,7 @@ Get-TimeZone -ListAvailable | Where-Object {$_.BaseUtcOffset -match ".*-09:00.*"
 ```
 
 ---
-### _A slightly more complicated example_
+### _A Slightly More Complicated Example_
 Let's try filtering out details from scheduled tasks in Task Scheduler. If we simply run the following:
 
 ```PowerShell
@@ -219,7 +220,7 @@ For this example, we'll be trimming down those results just so we can see the au
 # A Where-Object with a naked property filter
 (Get-ScheduledTask -TaskName "Microsoft*" | Select-Object "*").CimInstanceProperties | Where-Object -Property Name -like 'Author'; Write-Output($_);
 ```
-I want to telegraph the idea that each of the above three lines produce identical results, so I only included the results once below to save space. (Note: on my computer, each line produced three objects)
+I want to reiterate that each of the above three lines produce identical results, so I only included the results once below to save space. (Note: on my computer, each line produced three objects)
 <details><summary><em>Click to expland the console results for the above three commands.</em></summary>
 
 ```PowerShell
@@ -244,7 +245,19 @@ I want to telegraph the idea that each of the above three lines produce identica
   
 </details>
 
-___
+---
+
+### _Filtering with Not Like_
+
+Say you have multiple network adapters on a PC, many of which are virtual adapters. You know that all virtual adapters contain the "virtual" somewhere in the name. <br>
+You could use a `-NotLike` to filter these out:
+
+```PowerShell
+Get-NetAdapter | Where-Object {$_.InterfaceDescription -NotLike "*virtual*"}
+```
+
+----
+----
 ## How to Save a List of a Folder's Contents to a .txt File
 
 The following command will send the top-level view of the current directory's list of files and folders to a .txt file. If the file already exists, its contents will be overwritten.
