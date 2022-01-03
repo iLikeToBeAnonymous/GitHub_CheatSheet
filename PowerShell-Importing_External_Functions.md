@@ -1,7 +1,7 @@
 ## _Importing Functions via Dot Notation_
 
-Consider two files: `Functions.ps1` and `Main.ps1`. <br>
-Contents of `Functions.ps1`:
+Consider two files: `MyFunctions.ps1` and `Main.ps1`. <br>
+Contents of `MyFunctions.ps1`:
 ```PowerShell
 Function Get-SomeText {
     param
@@ -18,11 +18,11 @@ Function Get-SomeText {
 ```PowerShell
 # Note: using dot source notation requires putting the full path of the script being referenced.
 # This can be made dynamic by using the $PSScriptRoot PowerShell variable.
-. "$PSScriptRoot`\Functions.ps1"
+. "$PSScriptRoot`\MyFunctions.ps1"
 # All functions of the above file are now able to be called from within this script
 Write-Output(Get-SomeText -someText 'This is some text')
 ```
-In the above example, note that `Get-SomeText` is a function located in `Functions.ps1` and that `-someText` is 
+In the above example, note that `Get-SomeText` is a function located in `MyFunctions.ps1` and that `-someText` is 
 the parameter of the function as declared in that function.
 
 ## _Using the Import-Module Commandlet_
@@ -32,8 +32,20 @@ Just like with dot notation, the file containing the functions you are importing
 path, so again, this can by made dynamic by use of the `$PSScriptRoot` native variable. <br><br>
 **Contents of `Main.ps1` if `Import-Module` is used instead:**
 ```PowerShell
-Import-Module -Name "$PSScriptRoot`\functions.ps1" -Verbose
+Import-Module -Name "$PSScriptRoot`\MyFunctions.ps1" -Verbose
 Write-Output(Get-SomeText -someText 'This is some text')
+```
+
+## _Retrieving Info about a Currently-Loaded Module_
+Continuing with the example from above (notice that wildcards are allowed):
+```PowerShell
+Write-Output('Module Name: ' + (Get-Module "*functions*").Name)
+```
+
+## _Unloading a Currently-Loaded Module_
+Once you're done using the `MyFunctions` module, you can unload it from the session like so:
+```PowerShell
+Remove-Module -Name "MyFunctions" -Verbose
 ```
 
 References:
