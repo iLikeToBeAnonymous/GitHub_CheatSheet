@@ -1,3 +1,11 @@
+## Craft Computing's [Windows Deployment Services Tutorial](https://www.youtube.com/watch?v=ARDjb2UV3Nw)
+
+#### _Timestamps_
+
+- [Pulling `.wim`'s from the iso file](https://youtu.be/ARDjb2UV3Nw?t=437)
+- [`Boot.wim` vs `Installer.wim` Explained](https://youtu.be/ARDjb2UV3Nw?t=526)
+
+----
 ## Installing Windows via Custom Image
 [Source Tutorial](https://www.trishtech.com/2021/10/how-to-clean-install-windows-11-using-dism-on-any-hdd-ssd/)
 
