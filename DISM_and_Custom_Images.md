@@ -6,9 +6,13 @@
 - [`Boot.wim` vs `Installer.wim` Explained](https://youtu.be/ARDjb2UV3Nw?t=526)
 
 ----
-## Installing Windows via Custom Image
-[Source Tutorial](https://www.trishtech.com/2021/10/how-to-clean-install-windows-11-using-dism-on-any-hdd-ssd/)
+## Installing Windows via Custom Image [(trishtech.com)](https://www.trishtech.com/2021/10/how-to-clean-install-windows-11-using-dism-on-any-hdd-ssd/) <br>
+Finding the index of your install version within the `.wim` file:
 
+```PowerShell
+$wimFilePath = 'Win10_21H1_install.wim'
+DISM /Get-ImageInfo /ImageFile:$wimFilePath # Note the index number of the edition you want to install
+```
 
 ```cmd
 DISM /apply-image /imagefile:D:\Win10Pro-21H2-HMIvs_2022-01-10-1457.wim /index:1 /Unattend:D:\unattend.xml /applydir:C: 
