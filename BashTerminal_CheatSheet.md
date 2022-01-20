@@ -1,14 +1,53 @@
 # The Basics
 
+## Updating the System
 - `sudo apt-get update` 
   - >downloads up-to-date package info from all configured sources and updates the package index.
 - `sudo apt-get upgrade` 
   - >installs available upgrades of all packages currently installed on the system. 
   - >installs new packages if required to satisfy dependencies, but existing packages will never be removed.
-- Commands can be chained together: `sudo apt-get update && sudo apt-get upgrade`
 - After installing software or updates, run `sudo apt-get autoremove` to remove packages that were installed automatically as dependencies but now are no longer needed. This is sort of the inverse of how `apt-get upgrade` auto-installs dependencies.
 - `sudo apt-get clean`
   - this cleans the download cache after new packages have been installed.
+
+## Command Chaining
+- Commands can be chained together: `sudo apt-get update && sudo apt-get upgrade`
+
+## Lists and Simple `for` Loop
+### _Space-delimited List_
+- The following list of strings are space-delimited.
+- It does not matter if it is a simple space or a new line, as long as the strings are framed within parentheses.
+- Double quotes are optional, unless you want to include a space within a term in the list.
+
+```sh
+MyList=(
+    word "another word" whatchamacallit
+    "some thing" something foo "bar"
+)
+```
+
+### _Incrementing a Counter_
+Unfortunately, there doesn't seem to be an easy increment operator in Bash. Instead, it must be done by framing the expression in dual parentheses.
+
+```sh
+MyCounter=0
+((MyCounter = MyCounter + 1)) # Increment the counter
+```
+
+### _Putting it all Together_
+
+```sh
+MyList=(
+    word "another word" whatchamacallit
+    "some thing" something foo "bar"
+)
+MyCounter=0
+for i in "${MyList[@]}"
+do
+    echo "Index $MyCounter: $i"
+    ((MyCounter = MyCounter + 1)) # Increment the counter
+done
+```
 
 # Making a Script Exececutable
 Making a `.sh` script executable isn't actually turning it into a compiled script. Rather, you're giving it permission to run. To do so, type:
