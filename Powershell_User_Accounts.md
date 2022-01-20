@@ -52,6 +52,23 @@ Get-WmiObject -ComputerName $env:ComputerName -Class Win32_UserAccount |
 ```
 
 # Editing User Accounts via Admin PowerShell
+
+## Changing a Local User Password
+### _Secure Strings_
+By Variable (less secure) <sup>[*](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/convertto-securestring?view=powershell-7.2#example-3--convert-a-plain-text-string-to-a-secure-string)</sup>:
+```PowerShell
+$myNewPassword = 'Password123'
+get-localuser -name 'JohnSmith' | set-localuser -password (ConvertTo-SecureString -String $myNewPassword -AsPlainText -Force)
+```
+
+By User Input (better!) <sup>[*](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.localaccounts/set-localuser?view=powershell-5.1#examples)</sup>:
+```PowerShell
+# User types a password, which is obfuscated from view while typing
+$myNewPassword = Read-Host -AsSecureString
+$UserAccount = Get-LocalUser -Name "JohnSmith"
+$UserAccount | Set-LocalUser -Password $myNewPassword
+```
+
 ## Disabling a Local User <small><sup>[source](https://winaero.com/disable-enable-user-account-windows-10/)</sup></small>
 (to enable, use "yes" instead of "no")
 ```PowerShell
