@@ -53,6 +53,33 @@ Get-WmiObject -ComputerName $env:ComputerName -Class Win32_UserAccount |
 
 # Editing User Accounts via Admin PowerShell
 
+## Changing Location of `NTUSER.DAT` for a User
+
+```PowerShell
+#Get-LocalUser | Select-Object Name, SID, Enabled | Where-Object Name -Match "Admin*|User" | Sort-Object SID
+# HKey_Users only shows users that are actively logged onto the machine. To view all accounts, look at
+#  the registry location specified by $profilePaths below:
+$profilePaths = 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\'
+$userInfo = Get-LocalUser | Select-Object Name, SID, Enabled | Where-Object Name -Match "User"
+$userInfo.Name
+$userInfo.SID.Value
+# Write-Output($('C:\Users\'+$userInfo.Name)) # debugging
+# $userSID = (Get-LocalUser | Select-Object Name, SID, Enabled | Where-Object Name -Match "User*").SID.Value
+<#
+Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList
+#>
+Set-ItemProperty -Path $($profilePaths + $userInfo.SID.Value) -Name 'ProfileImagePath' -Value $('C:\Users\'+$userInfo.Name)
+<#
+New-PSDrive -PSProvider Registry -Root 'HKEY_USERS' -Name 'HKU'
+
+reg load HKU\UserHive 'C:\Users\User.DESKTOP-N5AA7K3\NTUSER.DAT'
+
+reg unload HKU\UserHive
+
+Remove-PSDrive -Name HKU
+#>
+```
+
 ## Changing a Local User Password
 ### _Secure Strings_
 By Variable (less secure) <sup>[*](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/convertto-securestring?view=powershell-7.2#example-3--convert-a-plain-text-string-to-a-secure-string)</sup>:
