@@ -55,6 +55,8 @@ If `/Commit` is selected, the unpacked directory will be repacked into the .wim 
 - [How DISM Cleanup-Image and RestoreHealth Affect Current Configuration](https://superuser.com/questions/1330365/how-will-dism-online-cleanup-image-restorehealth-affect-my-current-configurat)
   - `SFC` assumes the Component Store is **not** corrupted.
   - `sfc /verifyonly` will scan for problems without performing any action, allowing the operator to make that decision.
+- [How to Run SFC from WinPE](https://www.wintips.org/how-to-run-sfc-offline-system-file-checker-tool/)
+  - `sfc /ScanNow /OffBootDir=C:\ /OffWinDir=C:\Windows`
 
 
 From an Administrator PowerShell instance:
