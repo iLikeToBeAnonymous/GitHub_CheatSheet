@@ -50,7 +50,12 @@ If `/Commit` is selected, the unpacked directory will be repacked into the .wim 
 [Windows Central](https://www.windowscentral.com/how-use-dism-command-line-utility-repair-windows-10-image)
 [Some fancy DISM Repairs](https://www.wintips.org/fix-dism-0x800f081f-error-in-windows-10-8/)
 
-If the `/Cleanup-Image` and `/RestoreHealth` flags are used with DISM, the component store is automatically analyzed and cleaned.
+- [Analyze Component Store](https://win10.guru/dism-analyzecomponentstore-and-startcomponentcleanup/)
+  - If the `/Cleanup-Image` and `/RestoreHealth` flags are used with DISM, the component store is automatically analyzed and cleaned. <br>
+- [How DISM Cleanup-Image and RestoreHealth Affect Current Configuration](https://superuser.com/questions/1330365/how-will-dism-online-cleanup-image-restorehealth-affect-my-current-configurat)
+  - `SFC` assumes the Component Store is **not** corrupted.
+  - `sfc /verifyonly` will scan for problems without performing any action, allowing the operator to make that decision.
+
 
 From an Administrator PowerShell instance:
 ```PowerShell
@@ -73,8 +78,6 @@ are explicitly in this quote from [Microsoft Support](https://web.archive.org/we
 > _If you are running Windows 10, Windows 8.1 or Windows 8, first run the inbox Deployment Image Servicing and Management (DISM) tool 
 > **prior** to running the System File Checker (SFC)._ 
 
-### _More about How DISM was Used_
-- [Analyze Component Store](https://win10.guru/dism-analyzecomponentstore-and-startcomponentcleanup/)
 
 ## Making an Image
 
