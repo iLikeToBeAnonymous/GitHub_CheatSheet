@@ -50,10 +50,15 @@ If `/Commit` is selected, the unpacked directory will be repacked into the .wim 
 [Windows Central](https://www.windowscentral.com/how-use-dism-command-line-utility-repair-windows-10-image)
 [Some fancy DISM Repairs](https://www.wintips.org/fix-dism-0x800f081f-error-in-windows-10-8/)
 
+If the `/Cleanup-Image` and `/RestoreHealth` flags are used with DISM, the component store is automatically analyzed and cleaned.
+
 From an Administrator PowerShell instance:
 ```PowerShell
-Dism /Online /Cleanup-Image /StartComponentCleanup # "Source" CANNOT be specified with this command
+# Check the component store for broken or corrupted hard links
 DISM /Online /Cleanup-Image /AnalyzeComponentStore
+
+# Clean broken hard links from the component store (WinSxS cleanup)
+Dism /Online /Cleanup-Image /StartComponentCleanup # "Source" CANNOT be specified with this command
 
 # Now you can begin restoring from a wim image...
 $wimFilePath = 'J:\Win10Pro-21H2-HMIvs.wim'
@@ -67,6 +72,9 @@ only **AFTER** `Dism` has successfully run should `SFC /ScanNow` be run. This po
 are explicitly in this quote from [Microsoft Support](https://web.archive.org/web/20220217043413/https://support.microsoft.com/en-us/topic/use-the-system-file-checker-tool-to-repair-missing-or-corrupted-system-files-79aa86cb-ca52-166a-92a3-966e85d4094e):
 > _If you are running Windows 10, Windows 8.1 or Windows 8, first run the inbox Deployment Image Servicing and Management (DISM) tool 
 > **prior** to running the System File Checker (SFC)._ 
+
+### _More about How DISM was Used_
+- [Analyze Component Store](https://win10.guru/dism-analyzecomponentstore-and-startcomponentcleanup/)
 
 ## Making an Image
 
