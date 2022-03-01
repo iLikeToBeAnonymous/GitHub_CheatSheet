@@ -82,3 +82,17 @@ Note: ALL THREE PARAMETERS MUST BE PROVIDED FOR THIS TO NOT THROW ERRORS!
 $defaultMsg = "If a registry entry doesn't exist, this gets returned."
 [Microsoft.Win32.Registry]::GetValue('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon','AutoRestartShell',$defaultMsg)
 ```
+
+----
+----
+
+## Accessing the Registry Directly
+Native [Microsoft.Win32.Registry](https://docs.microsoft.com/en-us/dotnet/api/microsoft.win32.registrykey?view=net-6.0#methods)
+```PowerShell
+$Hive = [Microsoft.Win32.Registry]::CurrentUser # Other options are LocalMachine and Users
+#$regSubPath = 'loadedUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
+$regSubPath = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer'
+$Key = $Hive.OpenSubKey($regSubPath)
+Write-Output($Key.ToString())
+Write-Output($Key.GetValueNames())
+```
