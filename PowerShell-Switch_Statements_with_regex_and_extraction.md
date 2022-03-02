@@ -1,3 +1,54 @@
+## Simple Switch with Multiple Matching Conditions
+See StackOverflow question [What's the Powershell syntax for multiple values in a switch statement?](https://stackoverflow.com/questions/3493731/whats-the-powershell-syntax-for-multiple-values-in-a-switch-statement)
+
+In my testing, I've noticed the following:
+1) It seems very important to always wrap a single condition in parentheses.
+2) Following a case with a `break` sometimes makes things work more smoothly, but isn't always necessary.
+
+In the example below, notice that because some cases can be triggered by several values, those values are stored as an array, and the `-contains` flag checks the 
+value against them.
+
+```PowerShell
+$foo = '1','a','2','b','c','d','5','e','f','g','y','h'
+$foo | ForEach-Object {
+    switch ($_) {
+        ('y') {Write-Output("$_ is sometimes considered a vowel"); break;}
+        {@('a','e','i','o','u') -contains $_} {Write-Output("$_ is a vowel"); break;}
+        {@('1','2','3','4','5','6','7','8','9','0') -contains $_}{Write-Output("$_ is a number"); break;}
+        Default {Write-Output("$_ is a consonant"); break;}
+    }
+}
+```
+
+Notice in the example below that the first case has two acceptable values.
+
+```PowerShell
+$foo = (('Yes HUZZAH niet. Nope No Y') -split ' ').trim()
+$foo | ForEach-Object {
+    switch ($_.ToLower()) {
+        {'y', 'yes' -eq $_} {Write-Output("($_)`t" + 'You entered "Yes"')}
+        ('huzzah') {Write-Output("($_)`t" + 'Calm down...')}
+        ("no") {Write-Output("($_)`t" + 'You entered "No"')}
+        default {Write-Output("($_)`t" + "What part of `"Yes or No`" don't you understand?")}
+    }
+}
+```
+
+This example uses a wildcard so anything that starts with the letters "no" triggers the case.
+```PowerShell
+$foo = (('Yes HUZZAH niet. Nope No Y') -split ' ').trim()
+$foo | ForEach-Object {
+    switch -wildcard ($_.ToLower()) {
+        {'y', 'yes' -eq $_} {Write-Output("($_)`t" + 'You entered "Yes"')}
+        ("no*") {Write-Output("($_)`t" + 'You entered "No"')}
+        default {Write-Output("($_)`t" + "What part of `"Yes or No`" don't you understand?")}
+    }
+}
+```
+
+----
+----
+
 ## Reading .ini and Parsing Contents
 
 Below code is a simple function that:
