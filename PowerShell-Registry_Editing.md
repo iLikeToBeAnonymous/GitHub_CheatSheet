@@ -88,11 +88,50 @@ $defaultMsg = "If a registry entry doesn't exist, this gets returned."
 
 ## Accessing the Registry Directly
 Native [Microsoft.Win32.Registry](https://docs.microsoft.com/en-us/dotnet/api/microsoft.win32.registrykey?view=net-6.0#methods)
+See also: https://docs.microsoft.com/en-us/dotnet/api/microsoft.win32.registrykey.openbasekey?view=net-6.0
 ```PowerShell
-$Hive = [Microsoft.Win32.Registry]::CurrentUser # Other options are LocalMachine and Users
-#$regSubPath = 'loadedUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System'
-$regSubPath = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer'
-$Key = $Hive.OpenSubKey($regSubPath)
-Write-Output($Key.ToString())
-Write-Output($Key.GetValueNames())
+Import-Module -Name .\LIB\GPRegistryPolicy\GPRegistryPolicyParser.psm1 -Verbose
+
+##################################################
+reg load 'HKLM\loadedUser' 'C:\Users\Default\NTUSER.DAT'
+
+$Hive = [Microsoft.Win32.Registry]::LocalMachine
+<# https://docs.microsoft.com/en-us/dotnet/api/microsoft.win32.registry?view=net-6.0#examples
+REGARDING THE ABOVE LINE (WHEREIN THE HIVE IS SPECIFIED AS "LocalMachine"), other acceptable values are:
+    CurrentUser
+    LocalMachine
+    ClassesRoot
+    Users
+    PerformanceData
+    CurrentConfig
+    DynData
+#>
+# $Hive = [Microsoft.Win32.Registry]::CurrentUser
+$regSubPath = 'loadedUser\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize'
+#$regSubPath = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer'
+$targetValueName = 'EnableTransparency'
+
+$RegKey = $Hive.OpenSubKey($regSubPath)
+Write-Output("Key:`n`t" + $RegKey.ToString())
+
+$Vals = $RegKey.GetValueNames()
+Write-Output('Value Names:')
+# Write-Output($RegKey.GetValueNames())
+$Vals | ForEach-Object {Write-Output("`t$_")}
+
+$Data = $RegKey.GetValue($targetValueName)
+$Size = $Data.Length
+
+Write-Output("Info for $targetValueName`: ")
+Write-Output("`tData Value`: $Data")
+Write-Output("`tData Size`: $Size")
+##################################################
+
+# https://docs.microsoft.com/en-us/dotnet/api/microsoft.win32.registrykey?view=net-6.0#methods
+# $RegKey.Flush() # Writes all the attributes of the specified open registry key into the registry
+$RegKey.Close() # Closes the key and flushes it (writes it) to disk if its contents have been modified.
+$RegKey.Dispose() # Releases all resources used by the current instance of the RegistryKey class.
+
+reg unload 'HKLM\loadedUser'
+[System.GC]::Collect() # Standard garbage collection invocation
 ```
