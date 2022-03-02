@@ -135,3 +135,57 @@ $RegKey.Dispose() # Releases all resources used by the current instance of the R
 reg unload 'HKLM\loadedUser'
 [System.GC]::Collect() # Standard garbage collection invocation
 ```
+
+----
+
+### _Same as above, but with `REG_BINARY` Value_
+
+```PowerShell
+reg load 'HKLM\loadedAdmin' 'C:\Users\Admin\NTUSER.DAT'
+
+$Hive = [Microsoft.Win32.Registry]::LocalMachine
+$regSubPath = 'loadedAdmin\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent'
+$targetValueName = 'AccentPalette'
+
+$RegKey = $Hive.OpenSubKey($regSubPath)
+Write-Output("Key:`n`t" + $RegKey.ToString())
+
+$Vals = $RegKey.GetValueNames()
+Write-Output('Value Names:')
+$Vals | ForEach-Object {Write-Output("`t$_")}
+
+$Data = $RegKey.GetValue($targetValueName)
+Write-Host $RegKey.GetValue($targetValueName).GetType() -ForegroundColor Black -BackgroundColor White
+$Size = $Data.Length
+# [System.Text.Encoding]::Default.GetString($Data)
+
+Write-Output('----------------------------------------')
+Write-Output("`nInfo for $targetValueName`: ")
+Write-Output("`tData Value`: $Data")
+Write-Output("`tData Size`: $Size")
+Write-Output([System.Text.Encoding]::Default.GetString($Data))
+Write-Output([System.Text.Encoding]::Ascii.GetString($Data))
+
+# CONVERT THE BYTE ARRAY TO HEX (THE WAY IT LOOKS IN THE REGISTRY EDITOR)
+# https://stackoverflow.com/questions/46301473/powershell-byte-array-to-hex
+$hexString = ($Data | ForEach-Object ToString X2) -join ''
+
+# Now split the hexString back into an array...
+# https://stackoverflow.com/questions/54543075/how-to-convert-a-hash-string-to-byte-array-in-powershell
+#$backToByte = [System.Convert]::FromHexString($hexString) # ONLY WORKS IN POWERSHELL 7.1+
+$backToByte = [byte[]] -split ($hexString -replace '..', '0x$& ') -join ' '
+
+
+Write-Output($hexString)
+Write-Output($backToByte)
+Write-Output('----------------------------------------')
+##################################################
+Write-Output('Calling Function "Get-RegKeyInfo"')
+Get-RegKeyInfo -RegKey $RegKey -ValueName 'AccentPalette'
+Write-Output('----------------------------------------')
+$RegKey.Close() # Closes the key and flushes it (writes it) to disk if its contents have been modified.
+$RegKey.Dispose() # Releases all resources used by the current instance of the RegistryKey class.
+
+reg unload 'HKLM\loadedAdmin'
+[System.GC]::Collect() # Standard garbage collection invocation
+```
