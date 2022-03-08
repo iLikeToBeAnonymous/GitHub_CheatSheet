@@ -14,6 +14,12 @@ $wimFilePath = 'Win10_21H1_install.wim'
 DISM /Get-ImageInfo /ImageFile:$wimFilePath # Note the index number of the edition you want to install
 ```
 
+To delete a partition on a drive that already has Windows installed:
+```cmd
+@REM within DiskPart select the partition to delete, then...
+del part override
+```
+
 ```cmd
 DISM /apply-image /imagefile:D:\Win10Pro-21H2-HMIvs_2022-01-10-1457.wim /index:1 /Unattend:D:\unattend.xml /applydir:C: 
 ```
