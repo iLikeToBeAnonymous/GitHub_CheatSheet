@@ -65,7 +65,7 @@ $rawFileContent | ForEach-Object{
     if($validated.AbsoluteURI -ne $null){
 
         Start-Process firefox -ArgumentList @('-private-window' , $validated.AbsoluteURI)
-        Start-Sleep -Milliseconds 100 # Just to make things a little smoother
+        Start-Sleep -Milliseconds 250 # Just to make things a little smoother
     }
     # Start-Process firefox -ArgumentList @('-private-window' , $_)
 }
