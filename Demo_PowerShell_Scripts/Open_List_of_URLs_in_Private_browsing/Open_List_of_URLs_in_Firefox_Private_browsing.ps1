@@ -7,13 +7,15 @@
             https://www.openallurls.com/
             https://superuser.com/questions/1576302/start-chrome-with-a-url-with-options-incognito-mode-and-maximized-tab-in-batch
             https://stackoverflow.com/questions/57027695/open-multiple-urls-with-firefox-in-private-mode-using-powershell
-            https://www.tdworld.com/overhead-distribution/article/21157216/scada-implementation-simplified
+            Validating a URL:
+                https://community.idera.com/database-tools/powershell/powertips/b/tips/posts/validating-a-url
         
         Needed to do:
             I would like to turn this into a function and have the function check if the variable passed is an array or a delimted string
             to parse into an array.
 )
 #>
+<# 
 $urlList1 = @(
     'https://www.google.com/search?q=make+windows+deployment+image+from+existing+installation',
     'https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/deploy-a-custom-image?view=windows-11',
@@ -42,12 +44,28 @@ $urlList2 = @(
     'https://git-scm.com/docs/git-mv',
     'https://git-scm.com/docs/gitignore'
 )
+$myText = '####### List for First Window #######'
+$urlList1 | ForEach-Object {$myText += ("`n" + $_)}
+$myText += ("`n`n" + '####### List for Second Window #######')
+$urlList2 | ForEach-Object {$myText += ("`n" + $_)}
 
-
+Set-Content -Path 'urlList.txt' -Value $myText 
+#>
+$filePath = $PSScriptRoot + '\' + 'urlList.txt'
+$rawFileContent = Get-Content $filePath
 
 
 # $sysPath = $env:Path.Split(',')
 # Start-Process firefox -ArgumentList @('-private-window' , 'https://youtube.com/')
-$urlList2 | ForEach-Object{
-    Start-Process firefox -ArgumentList @('-private-window' , $_)
+$rawFileContent | ForEach-Object{
+    # Verify that the url is valid. This also weeds out empty lines and comments.
+    # https://community.idera.com/database-tools/powershell/powertips/b/tips/posts/validating-a-url
+    $validated = $_ -as [System.URI]
+    # ($_ -as [System.URI]).AbsoluteURI -ne $null
+    if($validated.AbsoluteURI -ne $null){
+
+        Start-Process firefox -ArgumentList @('-private-window' , $validated.AbsoluteURI)
+        Start-Sleep -Milliseconds 100 # Just to make things a little smoother
+    }
+    # Start-Process firefox -ArgumentList @('-private-window' , $_)
 }
