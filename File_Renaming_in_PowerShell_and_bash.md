@@ -1,6 +1,5 @@
-___
-## File Rename Automation in PowerShell
-## Appending a suffix
+# File Rename Automation in PowerShell
+## _Appending a Suffix_
 To append a timestamp to a filename (NOTE: this format below inserts periods between `HH.mm.ss`):
 ```PowerShell
 get-item filepath | Rename-Item -NewName {$_.BaseName+(Get-Date $_.CreationTime -Format "yyyy-MM-dd HH.mm.ss" )+$_.Extension}
@@ -38,15 +37,16 @@ Of course, you could also use this to prepend a prefix as well:
 ```PowerShell
 Dir | Rename-Item -NewName {"Some_Prefix_Here_"+$_.BaseName+$_.Extension}
 ```
-___
-### PowerShell Rename with Find and Replace
+----
+----
+## _PowerShell Rename with Find and Replace_
 
-#### First, some notes: 
+### First, some notes: 
 - The property `$_.name` indicates the entire file name, **including the extension**.
 - The property `$_.BaseName` seems to indicate **only** the file name, but does **NOT include the extension**.
 - The property `$_.Extension` is the existing file extension on each file.
 
-#### Simple Rename and Replace
+### Simple Rename and Replace
 The following assumes you already have PowerShell open in the directory in which you want the renaming to take place.
 In the current dir, all file names containing the partial string targeted for replacement will have that partial string value replaced with the new value, leaving the rest of the file name alone.
 ```PowerShell
@@ -67,7 +67,7 @@ Dir | Rename-Item -NewName {$_.name -replace "_.jpeg",".jpg"}
 Dir | Rename-Item -NewName {$_.BaseName +".jpg"}
 ```
 
-#### Filtering before Renaming
+### Filtering before Renaming
 The previous renaming examples attempt to make changes to all files in a directory, but a more graceful approach utilizes the `Get-ChildItem` command. 
 
 For example, lets say you have a list of files with a date suffix formatted `yyyy-mm-dd-HHmm` as used in the examples earlier. Within that list of files, you only want to perform a renaming action on the files have suffix for the year 2021, the month 09, and between 07:30 and 07:39, you could do the following (_note the use of **single quotes** in the `Get-ChildItem` statement_)
@@ -80,14 +80,46 @@ If, for example, you wished to replace all white-spaces directly with underscore
 ```PowerShell
 Get-ChildItem *' '* | Rename-Item -NewName {($_.BaseName -replace '\s+','_')+$_.Extension}
 ``` 
+----
+----
+## _Flip-flopping Parts of a File Name_
 
-___
-### Further Reading
+Consider you have the following files in a folder:
+
+```
+Invoice_E0200G90M8--2021-10-28-0007.pdf
+Invoice_E0200GS2L3--2021-12-13-0228.pdf
+Invoice_E0200I7B70--2022-04-13-0149.pdf
+Invoice_E0200I7EAD--2022-04-13-0106.pdf
+```
+
+If you wanted to move the invoice name portion to the end and move the date portion to the beginning, you could do the following via RegEx:
+
+```PowerShell
+Get-ChildItem "*Invoice*.pdf" | ForEach-Object {
+    $_.Name -match "(Invoice.*)--(\d{4}-\d{2}-\d{2}-\d{4})\.pdf";
+    $datePortion = $Matches[2];
+    $invName = $Matches[1];
+    $_ | Rename-Item -NewName {"$datePortion--$invName"+$_.Extension} -Path $Matches[0] -Verbose
+}
+```
+
+This would yield:
+
+```
+2021-10-28-0007--Invoice_E0200G90M8.pdf
+2021-12-13-0228--Invoice_E0200GS2L3.pdf
+2022-04-13-0106--Invoice_E0200I7EAD.pdf
+2022-04-13-0149--Invoice_E0200I7B70.pdf
+```
+----
+----
+## _Further Reading_
 - [PowerShell's "rename-item" command](https://www.pdq.com/powershell/rename-item/)
 - [PowerShell's "move-item" command](https://www.pdq.com/powershell/move-item/)
-___
-___
-## Renaming in Bash
+----
+----
+## _Renaming in Bash_
 ### Simple Rename
 To just rename a file in bash (without moving it) you'd still use the "mv" command. Note that there are no spaces, and the file names include their extensions. 
 ```bash
