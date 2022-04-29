@@ -80,6 +80,12 @@ $wimFilePath = 'J:\Win10Pro-21H2-HMIvs.wim'
 DISM /Online /Cleanup-Image /RestoreHealth /Source:WIM:J:\Win10Pro-21H2-HMIvs.wim:1
 ```
 
+Alternatively, `DISM` can be run from boot PE via the `/Image` flag instead of the `/Online` flag.
+
+```PowerShell
+DISM /Image:C:\ /Cleanup-Image /RestoreHealth
+```
+
 According to [answer by JW0914](https://superuser.com/questions/1330365/how-will-dism-online-cleanup-image-restorehealth-affect-my-current-configurat),
 only **AFTER** `Dism` has successfully run should `SFC /ScanNow` be run. This post is exceptional and should be read in more detail. The claims by user JW0914
 are explicitly in this quote from [Microsoft Support](https://web.archive.org/web/20220217043413/https://support.microsoft.com/en-us/topic/use-the-system-file-checker-tool-to-repair-missing-or-corrupted-system-files-79aa86cb-ca52-166a-92a3-966e85d4094e):
