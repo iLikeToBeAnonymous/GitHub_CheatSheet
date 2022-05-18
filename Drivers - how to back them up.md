@@ -46,6 +46,10 @@ Get-WindowsDriver -Online -Driver oem5.inf
 pnputil /export-driver oem5.inf  'E:\My_Driver_Backup'
 ```
 
+I began working on a more direct script to do all this... This is what I have so far:
+```PowerShell
+Get-WindowsDriver -Online -Driver oem5.inf | ForEach-Object {Write-Output("$($_.OriginalFileName)")}
+```
 ---
 ## Further Reading
 https://docs.microsoft.com/en-us/powershell/module/dism/get-windowsdriver?view=windowsserver2022-ps
