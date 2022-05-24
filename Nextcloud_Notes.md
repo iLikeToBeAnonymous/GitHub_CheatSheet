@@ -13,10 +13,13 @@ If you perform this mapping from an Admin PowerShell instance, the mapped drive 
 _Answer by user Denis Cooper on forum post [here][DENISCOOPER]._
 
 As a side-note, a drive with a mapped letter (such as described above) can be removed/unmapped by:
-_Source: Codrut Neagu on [digitalcitizen.life][codrut]_
+
 ```PowerShell
 net use N: /delete
 ```
+_Source: Codrut Neagu on [digitalcitizen.life][codrut]_
+
+
 
 After a drive is mapped, files can be successfully copied to the Nextcloud instance via the PowerShell `Copy-Item` command:
 
