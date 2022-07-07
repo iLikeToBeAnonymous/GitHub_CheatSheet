@@ -17,3 +17,9 @@ $myFQDN=(Get-WmiObject win32_computersystem).DNSHostName+"."+(Get-WmiObject win3
 Get-CimInstance win32_computersystem | % { $_.Name + '.' + $_.Domain }
 netdom computername ($env:COMPUTERNAME) /enumerate # Has the benefit of showing all names if the computer has aliases.
 ```
+
+In addition to the above methods, there is an extremely useful (and _simple_) way to get system info, including `hostname`, OS, RAM, and even computer model (for example, if running the command on an Intel NUC, you can find the Intel model number). What is this glorious command? 
+```PowerShell
+systeminfo
+```
+Incidentally, it works in both PowerShell _AND_ in a cmd prompt.
