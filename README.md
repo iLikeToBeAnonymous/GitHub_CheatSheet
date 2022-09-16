@@ -79,6 +79,13 @@ On the other hand, if you want a "nuke 'em all" solution to revert to the last c
 ```gitattributes
 git reset HEAD --hard #HEAD is optional
 ```
+Alternatively, you just want to overwrite a specific branch with the upstream version you can do so. Be advised that the commands WILL IGNORE untracked files
+in your local copy. As a precaution, the first command you should enter is a `checkout` to ensure you're actually on the branch you want to overwrite with the origin version. The command sequence is as follows:
+```gitattributes
+git checkout branchName_to_overwrite
+git fetch -u origin
+git reset --hard origin/branchName_to_overwrite
+```
 
 Afterwards, if you want to further clean things up by removing files not under version control (probably a good idea), git has a command for this, but **use it with caution!**
 
