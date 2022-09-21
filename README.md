@@ -69,6 +69,24 @@ git push --all origin
 ```
 ___
 
+### Using `commit --amend`
+If you accidentally left off a minor change or detail in your commit and don't want to make an entirely new commit for something like a line comment or
+a extra note in the commit message, you can simply amend the commit. First, make sure that you're still on the correct branch, then stage the changes
+and type:
+
+```gitattributes
+git commit --amend
+```
+
+If you've already pushed the commit to your upstream repo, you will have to force the amendment. However, doing so requires extreme caution! This article on [Atlassian](https://www.atlassian.com/git/tutorials/rewriting-history) says it best:
+> _Amended commits are actually entirely new commits and the previous commit will no longer be on your current branch. This has the same consequences as resetting a public snapshot. Avoid amending a commit that other developers have based their work on. This is a confusing situation for developers to be in and it’s complicated to recover from._
+
+If you're sure you _DO_ want to force-push the amend commit, make sure you specify the branch name in the push command:
+```gitattributes
+git push -f origin YourBranchNameHere
+```
+___
+
 ### Undoing Changes
 If you want to undo the changes to a specific file:
 ```gitattributes
