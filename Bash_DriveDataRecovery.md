@@ -24,13 +24,16 @@ safecopy /dev/sdb /dev/sdc/images/myRecoveredImage.iso --stage3
 ```
 Making an iso as shown above _does_ work, but it doesn't product an iso that is mountable with Windows Explorer in Win10 (i.e., it's not in ISO 9660 format). 
 
-Make sure `genisoimage` package is installed (`sudo apt install genisoimage`). This gives you access to the [`isoinfo`] commands. You can then check info on your iso by:
+Make sure [`genisoimage` package] is installed (`sudo apt install genisoimage`). This gives you access to the [`isoinfo`] commands. You can then check info on your iso by:
 ```bash
 isoinfo -J -l -i myRecoveredImage.iso
 ```
+[Gist Tutorial to Edit and Repack an ISO]
 
 Safecopy is a project by [corvuscorax] on SOURCEFORGE. While he is still active as a user, the [safecopy project] hasn't been updated since 2013.
 
 [corvuscorax]: <https://sourceforge.net/u/corvuscorax/profile/>
 [safecopy project]: <https://sourceforge.net/projects/safecopy/>
+[`genisoimage` package]: <https://packages.debian.org/bullseye/genisoimage>
 [`isoinfo`]: <https://manpages.debian.org/bullseye/genisoimage/isoinfo.1.en.html>
+[Gist Tutorial to Edit and Repack an ISO]: <https://gist.github.com/AkdM/2cd3766236582ed0263920d42c359e0f>
