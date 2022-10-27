@@ -96,7 +96,7 @@ are explicitly in this quote from [Microsoft Support](https://web.archive.org/we
 As a side note, if you're already in a Windows installation (_i.e._, an "Online" instance), the following is a one-liner that does all of the following (although not necessarily as thoroughly as performing this while referencing a source `.wim`.
 
 ```PowerShell
-DISM /Online /Cleanup-Image /RestoreHealth; sfc /ScanNow /OffBootDir=C:\;
+DISM /Online /Cleanup-Image /RestoreHealth; SFC /ScanNow;
 ```
 
 ---
