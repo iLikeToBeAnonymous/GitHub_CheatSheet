@@ -71,7 +71,7 @@ From an Administrator PowerShell instance:
 DISM /Online /Cleanup-Image /AnalyzeComponentStore
 
 # Clean broken hard links from the component store (WinSxS cleanup)
-Dism /Online /Cleanup-Image /StartComponentCleanup # "Source" CANNOT be specified with this command
+DISM /Online /Cleanup-Image /StartComponentCleanup # "Source" CANNOT be specified with this command
 
 # Now you can begin restoring from a wim image...
 $wimFilePath = 'J:\Win10Pro-21H2-HMIvs.wim'
@@ -92,7 +92,14 @@ are explicitly in this quote from [Microsoft Support](https://web.archive.org/we
 > _If you are running Windows 10, Windows 8.1 or Windows 8, first run the inbox Deployment Image Servicing and Management (DISM) tool 
 > **prior** to running the System File Checker (SFC)._ 
 
+### _Repairing from within a Windows Instance_
+As a side note, if you're already in a Windows installation (_i.e._, an "Online" instance), the following is a one-liner that does all of the following (although not necessarily as thoroughly as performing this while referencing a source `.wim`.
 
+```PowerShell
+DISM /Online /Cleanup-Image /RestoreHealth; sfc /ScanNow /OffBootDir=C:\;
+```
+
+---
 ## Making an Image
 
 ```PowerShell
