@@ -58,12 +58,12 @@ $outfile = Get-ItemPropertyValue -path $outputFileName -name 'fullname';
 
 $rootFolder = (Get-Location).Path;
 
-$fileList = Get-ChildItem -Path $rootFolder | Where-Object {$_.Name -match "\d{20}-nmapstage\d\.html"};
+$fileList = Get-ChildItem -Path $rootFolder | Where-Object {$_.Name -match "\d{20}-.*stage\d\.html"};
 $iterationLimit = $fileList.Count -1;
 $loopCount = 0;
 
 # Get-ChildItem -Path $rootFolder | ForEach-Object {
-#     if($_.Name -match "\d{20}-nmapstage\d\.html"){
+#     if($_.Name -match "\d{20}-.*stage\d\.html"){
 #         Get-HtmlBody -htmlFile $_.FullName -outfile $outfile -writeHead $false -writeFoot $false
 #     }
 # };
