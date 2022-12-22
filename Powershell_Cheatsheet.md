@@ -446,12 +446,28 @@ Note: Make sure you run PowerShell "As Administrator".
 Get-Service | Where-Object {$_.Status -eq "Running"} > myRunningServices.txt
 ```
 
-## View all open/listening ports
+## Using `netstat`
+### _View all open/listening ports_
 The following is copied from [gist:2558512](https://gist.github.com/steelcm/2558512) by member [Chris Steel (steelcm)](https://github.com/steelcm)
 
 ```powershell
 PS C:\> netstat -an | select-string -pattern "listening"
 ```
+
+Because `netstat` returns a string list, string filtering techniques must be used. In the example above, notice that the `Select-String` commandlet with a `-pattern` flag was used. (_**Remember!** the `pattern` flag accepts regular expressions_)
+
+### _Filtering by port number_
+Continuing from the previous example, the giant string is arranged in lines, and therefore can be iterated using the `ForEach-Object` commandlet. 
+```PowerShell
+# Make a RegEx to find instances of port 4443
+$myRegEx = ".*\:443\b.*"
+netstat -an | ForEach-Object {if($_ -match $myRegEx){Write-Output($_)}}
+```
+
+For more information about extracting network info via PowerShell, see [PowerShell-NetworkInfo.md].
+
+---
+
 
 ## Copying Folders and Files
 Personally, the two most-useful methods of copying are the [`copy-item`](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/copy-item?view=powershell-7.1) and [`robocopy`](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/robocopy) commands. The `copy-item` command is nice for copying a single file, but `robocopy` seems to still be the star when it comes to copying directories.
