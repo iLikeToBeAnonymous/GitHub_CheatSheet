@@ -464,7 +464,7 @@ $myRegEx = ".*\:443\b.*"
 netstat -an | ForEach-Object {if($_ -match $myRegEx){Write-Output($_)}}
 ```
 
-For more information about extracting network info via PowerShell, see [PowerShell-NetworkInfo.md].
+For more information about extracting network info via PowerShell, see [PowerShell-NetworkInfo.md](https://github.com/iLikeToBeAnonymous/GitHub_CheatSheet/blob/master/PowerShell-NetworkInfo.md).
 
 ---
 
