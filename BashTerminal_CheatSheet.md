@@ -10,6 +10,21 @@
 - `sudo apt-get clean`
   - this cleans the download cache after new packages have been installed.
 
+## Rebooting the System/Machine
+The following info was taken in part from a [page on linuxopsys.com](https://linuxopsys.com/topics/reboot-command)...
+If you're unconcerned with other users or any other currently running programs, the fast and effective way to reboot a machine is:
+```console
+sudo systemctl reboot
+```
+
+Alternatively, the Linux equivalent of the PowerShell `shutdown -r -f -t 0` command is as follows. However, use of `systemctl` seems to be more universally compatible in my experience.
+```console
+sudo shutdown -r now
+```
+
+---
+---
+
 ## Command Chaining
 - Commands can be chained together: `sudo apt-get update && sudo apt-get upgrade`
 
