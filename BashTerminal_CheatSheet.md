@@ -91,6 +91,20 @@ That's it!
 
 Above network drive mapping was taken from [this post](https://superuser.com/questions/1128634/how-to-access-mounted-network-drive-on-windows-linux-subsystem/1261563) by user _gman_ from the superuser.com forum. Accessed 2021-02-18.
 
+# Mounting an External Drive (_i.e._, a USB Flash Drive)
+Example from [SciVision](https://www.scivision.dev/mount-usb-drives-windows-subsystem-for-linux/)
+
+```bash
+echo 'Create a mount point for a flashdrive that in Windows is mounted at E:/'
+mkdir /mnt/e
+
+echo 'Now you can mount it'
+mount -t drvfs e: /mnt/e
+
+echo 'Now you can transfer a file you have mistakenly placed in your root folder...'
+mv /root/myFile.txt /mnt/e/myFile.txt
+```
+
 # File Renaming
 More of my personal notes can be found [here](https://github.com/iLikeToBeAnonymous/Site_Lookup_from_ID/blob/imgScrapingByURLWithFileName/Bash_download_File_from_URL_and_change_name_on_download.md). I plan on cleaning these up and merging them into this repo.
 
