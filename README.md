@@ -13,6 +13,15 @@ If you need to create a local copy of a project from Github, all you need to do 
   ```gitattributes
   git clone the_url_of_the_repository
   ```
+  
+If instead of a remote URL, you wish to clone from one local repo to a new local location, you can open a terminal in the new target
+and use the source repo's local path instead of a URL. In the example below, the local source is on my `f` drive in my `Projects` folder.
+This command was executed in WSL, but if should work the same in Linux if you remove the `/mnt` part.
+
+```gitattributes
+git clone '/mnt/f/Projects/<repo_name>/.git'
+```
+
 If you were working on a branch from a different machine and need to make sure you're up-to-date with the version in the repository:
 
 ```gitattributes
