@@ -52,6 +52,35 @@ For WSL (on which I'm running Python 3.8.5 at the time of writing this):
 python3 my_script.py
 ```
 
+---
+
+## Finging Length of Things (Plus using f-strings)
+
+```Python
+# Creating a Dictionary
+myprod = {
+	"Product":"Mobile",
+	"Model": "XUT",
+	"Units": [120,210,240],
+	"Available": "Yes"
+}
+just_a_string = 'Imma string'
+single_ele_array = ["I'm an array element'"]
+# Displaying the Dictionary
+print(myprod)
+print(myprod['Units'])
+
+# Formatting via f-strings (Literal String Interpolation)
+# After Python 3.6, f-strings are supposedly the most efficient method...
+# See https://www.simplilearn.com/tutorials/python-tutorial/string-formatting-in-python
+print(f"Dict 'myprod' has a length of: {len(myprod)}") # 4
+print(f"Sub element 'myprod[\"Units\"]' has a length of: {len(myprod['Units'])}") # 3
+print(str(f"Var 'just_a_string' has a length of: {len(just_a_string)}"))
+print(f"An array with a single element has a length of:  {len(single_ele_array)}") # 1
+```
+
+---
+
 ## Compiling into an Executable
 
 ### Easy Way — pyinstaller
