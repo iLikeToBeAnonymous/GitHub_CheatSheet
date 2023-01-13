@@ -55,6 +55,8 @@ python3 my_script.py
 ---
 
 ## Finging Length of Things (Plus using f-strings)
+See [How to count elements in a nested Python dictionary?](https://www.tutorialspoint.com/How-to-count-elements-in-a-nested-Python-dictionary)  
+and [Guide To String Formatting In Python](https://www.simplilearn.com/tutorials/python-tutorial/string-formatting-in-python)
 
 ```Python
 # Creating a Dictionary
