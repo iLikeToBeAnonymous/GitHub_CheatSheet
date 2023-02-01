@@ -1,5 +1,10 @@
 # The Basics
 
+## Checking OS Version Info
+To find out kernel info: `uname -sr`.  
+For other OS info (such as which version of Ubuntu you're on): `lsb_release -a`.  
+The more verbose, `.ini`-style option is: `cat /etc/os-release`.  
+
 ## Updating the System
 - `sudo apt-get update` 
   - >downloads up-to-date package info from all configured sources and updates the package index.
