@@ -1,11 +1,30 @@
 # The Basics
 
 ## Checking OS Version Info
-To find out kernel info: `uname -sr`.  
-For other OS info (such as which version of Ubuntu you're on): `lsb_release -a`.  
-The more verbose, `.ini`-style option is: `cat /etc/os-release`.  
+```bash
+# To find out kernel info: 
+uname -sr
+
+# For other OS info (such as which version of Ubuntu you're on): 
+lsb_release -a
+
+# The more verbose, .ini-style option is: 
+cat /etc/os-release
+```
+You can also try `hostnamectl`, which will reveal both the OS version and the kernel version, as well as info such as hardware vendor and model.  However, it doesn't work on WSL (in my experience).
+
+If you want to see what the update-manager's settings are for performing a version upgrade, you can do so by...  
+```bash
+cat /etc/update-manager/release-upgrades
+```
+
+Much of the above info was found _[HERE](https://www.cyberciti.biz/faq/upgrade-ubuntu-20-04-lts-to-22-04-lts/)_.  
+I recommend reading it. 
+
+---
 
 ## Updating the System
+### Regular Maintenance Updates ("_Upgrades_")
 - `sudo apt-get update` 
   - >downloads up-to-date package info from all configured sources and updates the package index.
 - `sudo apt-get upgrade` 
@@ -14,6 +33,14 @@ The more verbose, `.ini`-style option is: `cat /etc/os-release`.
 - After installing software or updates, run `sudo apt-get autoremove` to remove packages that were installed automatically as dependencies but now are no longer needed. This is sort of the inverse of how `apt-get upgrade` auto-installs dependencies.
 - `sudo apt-get clean`
   - this cleans the download cache after new packages have been installed.
+
+### Version Upgrades
+If, instead of just doing security and maintenance updates, you want to do a full version upgrade, use the following code and follow the prompts. If you DO run the following command, you'll have the option to cancel before any changes are actually made.  
+```bash
+sudo do-release-upgrade
+```
+
+---
 
 ## Rebooting the System/Machine
 The following info was taken in part from a [page on linuxopsys.com](https://linuxopsys.com/topics/reboot-command)...
