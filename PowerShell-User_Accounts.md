@@ -53,6 +53,26 @@ Get-WmiObject -ComputerName $env:ComputerName -Class Win32_UserAccount |
 
 # Editing User Accounts via Admin PowerShell
 
+## Simple Step to add a domain user to the Administrators group:[<sup>1</sup>](#1)
+Note: Make sure you run PowerShell "As Administrator".
+In PowerShell...
+
+```PowerShell
+Add-LocalGroupMember -Group 'Administrators' -Member $env:USERDOMAIN\<username>
+```
+
+You can then verify that the user was added successfully by running `Get-LocalGroupMember -Group 'Administrators'` and confirming that the user has been added to the group.  
+
+If only temporary access is needed, you may revoke the local admin status by simply reversing the command:
+
+```PowerShell
+Remove-LocalGroupMember -Group 'Administrators' -Member $env:USERDOMAIN\<username>
+```
+
+See also: PowerShell commandlet documentation for [`Add-LocalGroupMember`](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.localaccounts/add-localgroupmember), [`Get-LocalGroupMember`](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.localaccounts/get-localgroupmember), and [`Remove-LocalGroupMember`](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.localaccounts/remove-localgroupmember).  
+
+---
+
 ## Changing Location of `NTUSER.DAT` for a User
 
 ```PowerShell
@@ -103,3 +123,8 @@ net user "someUserName" /active:no
 ```
 
 ## Hiding Specific User Accounts from Login Screen <small><sup>[source](https://winaero.com/how-to-hide-user-accounts-from-the-login-screen-in-windows-10/)</sup></small>
+
+___
+### References:
+<a id="1">[1]</a> 
+Mohamed Jawad, [https://serverfault.com/questions/120229/adding-a-user-to-the-local-administrator-group-using-powershell](https://serverfault.com/questions/120229/adding-a-user-to-the-local-administrator-group-using-powershell), Accessed 2021-02-17
