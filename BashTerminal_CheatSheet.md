@@ -54,6 +54,12 @@ Alternatively, the Linux equivalent of the PowerShell `shutdown -r -f -t 0` comm
 sudo shutdown -r now
 ```
 
+## Creating and Adding a User to a Group
+In Ubuntu 12.04 and later, to add to the sudo (_admin_) group:
+```bash
+sudo adduser <username> --ingroup sudo
+```
+
 ---
 ---
 
