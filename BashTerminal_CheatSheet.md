@@ -54,10 +54,34 @@ Alternatively, the Linux equivalent of the PowerShell `shutdown -r -f -t 0` comm
 sudo shutdown -r now
 ```
 
+---
+---
+
 ## Creating and Adding a User to a Group
 In Ubuntu 12.04 and later, to add to the sudo (_admin_) group:
 ```bash
 sudo adduser <username> --ingroup sudo
+```
+
+---
+---
+
+## File and Folder Manipulation
+
+### Make a Folder
+To simply make one folder in the current directory
+```bash
+mkdir some_folder_name
+```
+
+The `mkdir` command accepts multiple entries at once, so if you want to create several files in the current directory:
+```bash
+mkdir folder_1 folder_2 folder_3
+```
+
+### Delete a File
+```bash
+rm file_to_delete
 ```
 
 ---
