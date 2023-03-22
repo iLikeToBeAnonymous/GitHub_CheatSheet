@@ -96,6 +96,18 @@ git push -f origin YourBranchNameHere
 ```
 ___
 
+## Git Prune and Cleaning Up
+Read up on this more to figure out exactly what it does and why you want to do it.
+Use of `git prune` should only be used within the context of `git gc` [Atlassian — Git prune](https://www.atlassian.com/git/tutorials/git-prune).  
+Info on `git gc`: [Atlassian — Git gc](https://www.atlassian.com/git/tutorials/git-gc)
+An emdash: &emdash;
+
+```gitattributes
+git prune remote origin
+```
+
+___
+
 ### Undoing Changes
 If you want to undo the changes to a specific file:
 ```gitattributes
