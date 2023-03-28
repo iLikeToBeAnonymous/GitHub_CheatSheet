@@ -111,7 +111,7 @@ ___
 ### Undoing Changes
 If you want to undo the changes to a specific file:
 ```gitattributes
-git reset myfile.name
+git restore myfile.name
 ```
 
 On the other hand, if you want a "nuke 'em all" solution to revert to the last commit:
