@@ -37,7 +37,12 @@
 
 ## [Update Node.js via npm (and npm along with it)](https://davidwalsh.name/upgrade-nodejs)
 
-- `n` is a package that serves as a helper in npm to update npm and Node.js (and do other things, possibly)
+The simple/vanilla way of updating npm is as follows:
+```bash
+sudo npm install -g npm@latest
+```
+
+Alternatively, you can use `n`, a package that serves as a helper in npm to update npm and Node.js (and do other things, possibly)
 - 
 	```gitattributes
 	sudo apt-get update
