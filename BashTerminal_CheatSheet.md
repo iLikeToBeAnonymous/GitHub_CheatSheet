@@ -7,6 +7,10 @@ uname -sr
 
 # For other OS info (such as which version of Ubuntu you're on): 
 lsb_release -a
+# If you only want just the release number (to store to a variable for later use or something)
+lsb_release -r -s
+# -r flag is "release" and -s is "short format". They can be chained as:
+lsb_release -rs
 
 # The more verbose, .ini-style option is: 
 cat /etc/os-release
