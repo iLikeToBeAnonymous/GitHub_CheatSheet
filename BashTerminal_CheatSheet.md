@@ -198,7 +198,20 @@ curl ${myUrl}${myUpc} | grep "\<span\sitemprop\=\"price\"" | cut -d'>' -f4 | cut
 ```
 
 However, using `cut` seems to require a foreknowledge of the length to cut or a foreknowledge of a consistent character which would serve as a delimiter. 
-A more flexible alternative seems to be offered by the **perl** interpreter in bash. In the following, the two `cut` commands have been replaced by a single perl command, the results of which are then appended to a file named `results.txt`. 
+A more flexible alternative seems to be offered by the **perl** interpreter in bash. I'll pause here to briefly explain how to use perl to extract a match.  
+Consider the output of the `lsb_release -ds` command, which results in `Ubuntu 22.04.2 LTS` in this example. If I wanted to just extract the `22.04.2` part, I would pipe the output of the command to the perl interpreter: 
+```bash
+lsb_release -ds | perl -ln -e "/\d+\.\d+\.\d+/ and print $&;"
+```
+In the above line, the code after the pipe means the following:
+- `perl` — use the perl interpreter
+- `-ln` — find matching lines
+- `-e` — need to look up what this means, but the code fails without it
+- `and print` — matching lines are to be printed. By contrast, to print lines that **DON'T** match, you'd use `or print`
+- `$&` — special variable that holds the result of the latest match rather than the whole line.
+
+The above example and explanation was derived from John D. Cook's blog post [Perl as a better grep](https://www.johndcook.com/blog/2018/06/12/perl-as-a-better-grep/).  
+Now that we have a rudimentary understanding of regex in perl, let's return to our original exercise. In the following, the two `cut` commands have been replaced by a single perl command, the results of which are then appended to a file named `results.txt`. 
 ```bash
 url="https://www.microcenter.com/search/search_results.aspx?N=&cat=&Ntt="
 upc="195553093934"
