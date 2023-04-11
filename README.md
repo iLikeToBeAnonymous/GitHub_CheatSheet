@@ -70,7 +70,14 @@ git checkout
   ```gitattributes
   git push -u origin new-feature
   ```
-  
+
+- If there's a possibility that the main branch is ahead of your current branch and you plan to merge it into main, you should merge the content of main into your current branch by doing the following:
+```gitattributes
+git checkout <current_branch_name>
+git fetch --all
+git merge origin main
+```
+
 If you already have a multi-branch local repository and want to push all of its changes at once to GitHub, you can easily do so via:
 
 ```gitattributes
