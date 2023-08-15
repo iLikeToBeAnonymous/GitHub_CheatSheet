@@ -15,3 +15,15 @@ the path `C:\Users\YourUsername\Documents\IAmSymLink`.
 As an additional note, opening a file via the folder in the sym link will make its path appear to the opening program as being via the sym link, NOT its real location.
 
 **WARNING!!!** ATTEMPTING TO COPY/PASTE THE SYMLINK TO A DIFFERENT LOCATION WILL RESULT IN COPYING THE ENTIRE CONTENTS OF THE SYMLINK JUST LIKE A REGULAR FOLDER!
+
+### Other Behavior:
+Fortunately, *deleting* a symlink seems to merely delete the link, not delete the real folder or its contents.
+
+# Further Reading
+- [winaero.com]
+- [The Complete Guide to Creating Symbolic Links (aka Symlinks) on Windows][howtogeek.com]
+- [test]
+
+---------------------------------------------------------------------------------------
+[winaero.com]: <https://winaero.com/create-symbolic-link-windows-10-powershell/>
+[howtogeek.com]: <https://www.howtogeek.com/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/>
