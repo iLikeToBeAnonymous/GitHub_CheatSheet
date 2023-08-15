@@ -13,3 +13,5 @@ Executing the above code (the variable names were just used because the paths ar
 from within file explorer would reveal the contents of the folder at the UNC path defined for the variable `$realLocation`, but its path in your file explorer would show up as
 the path `C:\Users\YourUsername\Documents\IAmSymLink`.  
 As an additional note, opening a file via the folder in the sym link will make its path appear to the opening program as being via the sym link, NOT its real location.
+
+**WARNING!!!** ATTEMPTING TO COPY/PASTE THE SYMLINK TO A DIFFERENT LOCATION WILL RESULT IN COPYING THE ENTIRE CONTENTS OF THE SYMLINK JUST LIKE A REGULAR FOLDER!
