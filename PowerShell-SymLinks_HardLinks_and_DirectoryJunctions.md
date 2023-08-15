@@ -21,8 +21,8 @@ Fortunately, *deleting* a symlink seems to merely delete the link, not delete th
 
 # Further Reading
 - [winaero.com]
-- [The Complete Guide to Creating Symbolic Links (aka Symlinks) on Windows][howtogeek.com]
+- [Guide to Creating Symbolic Links (aka Symlinks) on Windows][howtogeek.com]
 
 ---------------------------------------------------------------------------------------
-[winaero.com]: <https://winaero.com/create-symbolic-link-windows-10-powershell/>
-[howtogeek.com]: <https://www.howtogeek.com/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/>
+[winaero.com]: <https://winaero.com/create-symbolic-link-windows-10-powershell/> 'Create Symbolic Link in Windows 10 with PowerShell'
+[howtogeek.com]: <https://www.howtogeek.com/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/> "The Complete Guide to Creating Symbolic Links (aka Symlinks) on Windows"
