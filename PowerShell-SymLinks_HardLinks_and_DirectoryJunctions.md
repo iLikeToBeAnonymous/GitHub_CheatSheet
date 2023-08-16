@@ -22,7 +22,9 @@ Fortunately, *deleting* a symlink seems to merely delete the link, not delete th
 # Further Reading
 - [winaero.com]
 - [Guide to Creating Symbolic Links (aka Symlinks) on Windows][howtogeek.com]
+- [Distributed Link Tracking and Object Identifiers] *This may not be relevant as it seems to rely on some deep system and NTFS features*
 
 ---------------------------------------------------------------------------------------
 [winaero.com]: <https://winaero.com/create-symbolic-link-windows-10-powershell/> 'Create Symbolic Link in Windows 10 with PowerShell'
 [howtogeek.com]: <https://www.howtogeek.com/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/> "The Complete Guide to Creating Symbolic Links (aka Symlinks) on Windows"
+[Distributed Link Tracking and Object Identifiers]: <https://learn.microsoft.com/en-us/windows/win32/fileio/distributed-link-tracking-and-object-identifiers> 'Distributed Link Tracking and Object Identifiers'
