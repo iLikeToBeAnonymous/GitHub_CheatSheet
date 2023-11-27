@@ -97,6 +97,8 @@ As a side note, if you're already in a Windows installation (_i.e._, an "Online"
 
 ```PowerShell
 DISM /Online /Cleanup-Image /RestoreHealth; SFC /ScanNow;
+# OR IF YOU KNOW THE COMPONENT STORE NEEDS CLEANUP:
+DISM /Online /Cleanup-Image /StartComponentCleanup; DISM /Online /Cleanup-Image /RestoreHealth; SFC /ScanNow;
 ```
 
 ---
