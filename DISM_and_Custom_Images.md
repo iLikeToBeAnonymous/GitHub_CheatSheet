@@ -51,7 +51,7 @@ DISM /Unmount-Wim /MountDir:$mountDir /Discard # To discard your changes
 If `/Commit` is selected, the unpacked directory will be repacked into the .wim file.
 
 ----
-## Repairing a Win Install via `.wim` File
+### _Repairing a Win Install via `.wim` File_
 
 [Windows Central](https://www.windowscentral.com/how-use-dism-command-line-utility-repair-windows-10-image)
 [Some fancy DISM Repairs](https://www.wintips.org/fix-dism-0x800f081f-error-in-windows-10-8/)
@@ -79,11 +79,47 @@ $wimFilePath = 'J:\Win10Pro-21H2-HMIvs.wim'
 # Additionally, note that the index is specified AND that "WIM" is specified after "Source" and before the path.
 DISM /Online /Cleanup-Image /RestoreHealth /Source:WIM:J:\Win10Pro-21H2-HMIvs.wim:1
 ```
-
-Alternatively, `DISM` can be run from boot PE via the `/Image` flag instead of the `/Online` flag.
+### _Repairing from within WinPE/BootPE_
+Alternatively, `DISM` can be run from Boot PE via the `/Image` flag instead of the `/Online` flag.
 
 ```PowerShell
 DISM /Image:C:\ /Cleanup-Image /RestoreHealth
+```
+However, running the above by itself typically results in the warning "_The scratch directory size might be insufficient to perform this operation_." 
+In this case, you will manually need to specify a scratch directory ([_source_)](https://www.wintips.org/fix-dism-error-the-scratch-directory-size-might-be-insufficient-to-perform-this-operation/)). 
+What seems to work for me is to modify the above code to the following:
+
+```PowerShell
+mkdir C:\Scratch # Assuming that directory doesn't already exist
+# then...
+DISM /Image:C:\ /Cleanup-Image /RestoreHealth /ScratchDir:C:\Scratch
+```
+Some manufacturers customize their Windows installations and have a dedicated recovery partition or drive. Clues to this can be found by:
+
+```PowerShell
+DiskPart
+# then after you've entered the DiskPart utility...
+list volume
+# This lists drive letters and volume labels
+```
+For this example, let's assume that `DiskPart` confirmed `C` as the "OS" volume and `F` as the "Image" volume.  
+The PowerShell DISM command would then be:
+
+```PowerShell
+DISM /Image:C:\ /Cleanup-Image /RestoreHealth /Source:F:\ /ScratchDir:C:\Scratch
+```
+
+### _Additional Notes_
+
+It is worth noting that occasionally, `DISM` will fail due to "pending operations." While I personally have not had luck with either of these commands, 
+there are two commands intended to fix this issue:
+
+```PowerShell
+# To view pending actions that may be causing issues
+DISM /Image:C:\ /Get-PendingActions
+
+# To clear pending actions
+DISM /Image:C:\ /Cleanup-Image /RevertPendingActions
 ```
 
 According to [answer by JW0914](https://superuser.com/questions/1330365/how-will-dism-online-cleanup-image-restorehealth-affect-my-current-configurat),
