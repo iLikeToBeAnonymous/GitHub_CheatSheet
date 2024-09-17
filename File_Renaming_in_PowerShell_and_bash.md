@@ -136,3 +136,8 @@ Then you can use a rename using a regular expression (assuming you've navigated 
 ```bash
 find -regextype posix-extended -regex '^.*test\.log\.[0-9]{4}-[0-9]{2}-[0-9]{2}\.*'
 ```
+### Simple Rename as One-Liner
+If, for example, you have a sequence of screenshots in a folder, following the format of `SN-12-1` through `SN-12-1200`, you could correct the last number block by opening a terminal in the containing folder and running:
+```bash
+for file in SN-12-*; do mv "$file" "$(printf "SN-12-%05d.png" "${file##*-}")"; done
+```
