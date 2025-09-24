@@ -14,6 +14,13 @@ which fields you want to view. For example, if you want to view the username and
 Get-LocalUser | Select Name, SID
 ```
 
+# Viewing all Administrators
+
+This bit of code is rather special because not only does it work well on PowerShell 5.1, but it is also backwards compatible to PowerShell 2.0.
+
+```PowerShell
+([ADSI]"WinNT://./Administrators").psbase.Invoke('Members') | % { ([ADSI]$_).InvokeGet('AdsPath') }
+```
 
 ## Viewing All Enabled User Accounts
 
