@@ -163,3 +163,19 @@ old_filename="current_filename_to_change.py"
 new_filename="better_filename.py"
 git mv $old_filename $new_filename
 ```
+
+___
+### Cleanup after a merge
+
+So you've merged a branch into main or master, and GitHub has given you that convenient "Merge Succesful: Delete old branch?" button. That's great! However, it still leaves the old branch hanging around in your local repository. Here's what to do:
+
+```gitattributes
+git checkout master
+git fetch --prune
+git branch -d <old-feature-branch>
+```
+
+Here's the breakdown of the above commands:
+- `git checkout master` — because you can't delete the branch you're standing on
+- `git fetch --prune` — to make sure you've seen all the remote/upstream branches that have been deleted. This will also tell you the specific name of the branch that was just deleted on GitHub.
+- `git branch -d <old-feature-branch>` — Actually deletes the local, now-defunct copy of the branch.
