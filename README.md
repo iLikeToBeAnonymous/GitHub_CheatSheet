@@ -170,9 +170,10 @@ ___
 So you've merged a branch into main or master, and GitHub has given you that convenient "Merge Succesful: Delete old branch?" button. That's great! However, it still leaves the old branch hanging around in your local repository. Here's what to do:
 
 ```gitattributes
-git checkout master
+git checkout <parentBranchName>
 git fetch --prune
-git branch -d <old-feature-branch>
+git pull origin <parentBranchName>
+git branch -d <childBranchName>
 ```
 
 Here's the breakdown of the above commands:
